@@ -10,7 +10,7 @@
 Build an enterprise-grade management platform for Achieve Together Care (NDIS provider) with the same structure as the reference design but better - featuring Business Command Center, Smart Outreach CRM, Clinical Management, and Data Synchronization modules.
 
 ## User Personas
-1. **Business Owner (Daniel Hayward)** - Primary user managing operations, outreach, revenue, and compliance
+1. **Business Owner (Daniel Leigh Hayward)** - Primary user managing operations, outreach, revenue, and compliance
 2. **Support Coordinators** - Recipients of outreach emails
 3. **Care Workers** - Future users for clinical incident logging
 
@@ -118,17 +118,38 @@ Build an enterprise-grade management platform for Achieve Together Care (NDIS pr
 - Google Maps API integrated with dark theme
 - Login flow redirects to dashboard successfully
 
+### Phase 8: WordPress Integration & Inquiries Management ✅
+**Date:** April 2, 2026  
+**Status:** COMPLETED
+
+**1. WordPress Owner Login Integration**
+- ✅ Header template edited (post ID: 11)
+- ✅ Owner Login button now links to Emergent app
+- ✅ Link: `https://client-dashboard-135.preview.emergentagent.com/login`
+- ✅ Verified: Clicking "Owner Login" on WordPress redirects to ATC Platform
+
+**2. Inquiries & Bookings Management (`/app/frontend/src/components/inquiries/InquiriesBookingsManagement.jsx`)**
+- ✅ Stats cards: Total Inquiries, New Inquiries, Total Bookings, Confirmed
+- ✅ Tabs: Inquiries and Bookings with count badges
+- ✅ List view with status badges (NEW, PENDING, CONTACTED, CONFIRMED, etc.)
+- ✅ Detail panel with contact info, message/notes, appointment details
+- ✅ Status update buttons: Contacted, Converted, Archive / Confirm, Complete, Cancel
+- ✅ Search and filter functionality
+- ✅ Refresh button
+- ✅ Added to Owner Portal sidebar as "Inquiries" nav item
+
 ## Architecture
 
 ```
 /app
  ├── frontend/src/
  │    ├── pages/
- │    │    ├── HomePage.jsx [NEW - Public Landing Page]
+ │    │    ├── HomePage.jsx [Public Landing Page]
  │    │    ├── LoginPage.jsx
  │    │    └── AuthCallback.jsx
  │    ├── components/
- │    │    ├── portals/ (OwnerPortal.jsx - 13 nav items)
+ │    │    ├── portals/ (OwnerPortal.jsx - 14 nav items)
+ │    │    ├── inquiries/ (InquiriesBookingsManagement.jsx) [NEW]
  │    │    ├── website/ (WebsiteIntegration.jsx)
  │    │    ├── gdrive/ (GDriveSyncComponent.jsx)
  │    │    ├── crm/ (SmartOutreach.jsx)
@@ -145,7 +166,8 @@ Build an enterprise-grade management platform for Achieve Together Care (NDIS pr
       ├── routers/
       │    ├── auth.py, dashboard.py, staff.py, clients.py
       │    ├── ai.py, payroll.py, compliance.py
-      │    └── gdrive.py [MOCKED]
+      │    ├── gdrive.py [MOCKED]
+      │    └── contact.py [NEW - Inquiries & Bookings]
       └── server.py
 ```
 
@@ -158,6 +180,14 @@ Build an enterprise-grade management platform for Achieve Together Care (NDIS pr
 - ✅ Website Integration
 - ✅ Google Drive Sync (Demo Mode)
 - ✅ Public Landing Page with Google Maps
+- ✅ Contact Form Backend & Booking System
+- ✅ WordPress Owner Login Integration
+- ✅ Inquiries & Bookings Management in Owner Portal
+
+### P1 - WordPress Homepage Upgrades (IN PROGRESS)
+- [ ] Update service card images (young active people, no wheelchairs/elderly)
+- [ ] Add professional service descriptions
+- [ ] Add ATC staff photos in branded shirts (need uploads from Daniel)
 
 ### P1 - Email Sending Integration (BLOCKED)
 - [ ] Resend API integration for actual email delivery

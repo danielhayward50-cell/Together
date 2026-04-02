@@ -4,7 +4,7 @@ import {
   LayoutDashboard, Users, FileText, DollarSign, Calendar,
   Settings, HelpCircle, LogOut, Menu, X, Bell, Search,
   TrendingUp, AlertCircle, CheckCircle, Clock, Rocket,
-  ChevronRight, Filter, Plus, Mail, MessageSquare, Globe, HardDrive
+  ChevronRight, Filter, Plus, Mail, MessageSquare, Globe, HardDrive, Inbox
 } from 'lucide-react';
 import { STAFF, CLIENTS, INVOICES, REPORTS, dashboardStats } from '../../lib/data';
 import { getComplianceScore, getExpiredDocuments, getExpiringDocuments } from '../../lib/compliance';
@@ -20,6 +20,7 @@ import PayrollManagement from '../payroll/PayrollManagement';
 import ComplianceManagement from '../compliance/ComplianceManagement';
 import WebsiteIntegration from '../website/WebsiteIntegration';
 import GDriveSyncComponent from '../gdrive/GDriveSyncComponent';
+import InquiriesBookingsManagement from '../inquiries/InquiriesBookingsManagement';
 import { useAuth } from '../../context/AuthContext';
 import { dashboardAPI, staffAPI, clientsAPI, invoicesAPI, reportsAPI } from '../../services/api';
 
@@ -92,6 +93,7 @@ export function OwnerPortal() {
 
   const navItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
+    { id: 'inquiries', label: 'Inquiries', icon: Inbox },
     { id: 'crm', label: 'Smart Outreach', icon: Rocket },
     { id: 'calendar', label: 'Calendar', icon: Calendar },
     { id: 'staff', label: 'Staff', icon: Users },
@@ -390,6 +392,8 @@ export function OwnerPortal() {
         return <WebsiteIntegration />;
       case 'gdrive':
         return <GDriveSyncComponent />;
+      case 'inquiries':
+        return <InquiriesBookingsManagement />;
       case 'settings':
         return <PlaceholderSection title="Settings" description="System configuration" />;
       default:
