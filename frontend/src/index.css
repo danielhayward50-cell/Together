@@ -2,15 +2,129 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
+
+/* ATC Design System - Swiss Enterprise Healthcare */
+:root {
+  --atc-bg: #F4F7FA;
+  --atc-surface: #FFFFFF;
+  --atc-primary: #0A1628;
+  --atc-primary-hover: #1A2B44;
+  --atc-secondary: #B794F4;
+  --atc-secondary-subtle: #F3E8FF;
+  --atc-accent: #14B8B6;
+  --atc-accent-subtle: #CCFBF1;
+  --atc-alert: #FF5A5F;
+  --atc-alert-subtle: #FFE4E6;
+  --atc-text: #0A1628;
+  --atc-text-muted: #64748B;
+  --atc-border: #E2E8F0;
+}
 
 body {
     margin: 0;
-    font-family: 'Inter', sans-serif;
+    font-family: 'IBM Plex Sans', -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background: #F4F7FA;
-    color: #0F172A;
+    background: var(--atc-bg);
+    color: var(--atc-text);
+}
+
+/* Headings use Manrope */
+h1, h2, h3, h4, h5, h6, .font-heading {
+    font-family: 'Manrope', sans-serif;
+}
+
+/* Enterprise table styling */
+.atc-table {
+    @apply w-full text-sm;
+}
+
+.atc-table thead th {
+    @apply text-xs tracking-widest uppercase font-semibold text-slate-500 text-left py-3 px-4 border-b border-slate-200 bg-slate-50/50;
+}
+
+.atc-table tbody tr {
+    @apply border-b border-slate-100 hover:bg-slate-50 transition-colors;
+}
+
+.atc-table tbody td {
+    @apply py-3 px-4;
+}
+
+/* Control Room Grid borders */
+.grid-bordered > * {
+    @apply border border-slate-200 bg-white;
+}
+
+/* Dense card styling - max 8px radius */
+.atc-card {
+    @apply bg-white border border-slate-200 rounded-lg p-4;
+}
+
+/* Status badges */
+.atc-badge {
+    @apply inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold;
+}
+
+.atc-badge-success {
+    @apply bg-emerald-50 text-emerald-700 border border-emerald-200;
+}
+
+.atc-badge-warning {
+    @apply bg-amber-50 text-amber-700 border border-amber-200;
+}
+
+.atc-badge-danger {
+    @apply bg-red-50 text-red-700 border border-red-200;
+}
+
+.atc-badge-info {
+    @apply bg-blue-50 text-blue-700 border border-blue-200;
+}
+
+.atc-badge-muted {
+    @apply bg-slate-100 text-slate-600 border border-slate-200;
+}
+
+/* Button styles */
+.atc-btn-primary {
+    @apply bg-[#0A1628] text-white rounded-md px-4 py-2 hover:bg-[#1A2B44] hover:-translate-y-px transition-all shadow-sm font-medium text-sm;
+}
+
+.atc-btn-secondary {
+    @apply bg-white text-[#0A1628] border border-slate-200 rounded-md px-4 py-2 hover:bg-slate-50 font-medium text-sm;
+}
+
+.atc-btn-danger {
+    @apply bg-[#FF5A5F] text-white rounded-md px-4 py-2 hover:bg-red-600 font-medium text-sm;
+}
+
+.atc-btn-accent {
+    @apply bg-[#14B8B6] text-white rounded-md px-4 py-2 hover:bg-teal-600 font-medium text-sm;
+}
+
+/* Input styling */
+.atc-input {
+    @apply w-full bg-white border border-slate-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#14B8B6]/30 focus:border-[#14B8B6];
+}
+
+/* Overline text for labels */
+.atc-label {
+    @apply text-xs tracking-widest uppercase font-semibold text-slate-500 mb-1.5 block;
+}
+
+/* Alert banners */
+.atc-alert-danger {
+    @apply border-l-4 border-[#FF5A5F] bg-[#FFE4E6] p-4 rounded-r-lg;
+}
+
+.atc-alert-warning {
+    @apply border-l-4 border-amber-500 bg-amber-50 p-4 rounded-r-lg;
+}
+
+.atc-alert-info {
+    @apply border-l-4 border-[#14B8B6] bg-[#CCFBF1] p-4 rounded-r-lg;
 }
 
 code {
