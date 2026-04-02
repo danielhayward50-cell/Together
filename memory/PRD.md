@@ -4,7 +4,7 @@
 **Product Name:** ATC Master OS v20.0 - Achieve Together Care Enterprise Platform  
 **Domain:** achievetogethercare.com.au  
 **Type:** Full-stack NDIS Care Management Platform  
-**Tech Stack:** React + FastAPI + MongoDB + jsPDF
+**Tech Stack:** React + FastAPI + MongoDB + jsPDF + Google Maps API
 
 ## Original Problem Statement
 Build an enterprise-grade management platform for Achieve Together Care (NDIS provider) with the same structure as the reference design but better - featuring Business Command Center, Smart Outreach CRM, Clinical Management, and Data Synchronization modules.
@@ -59,23 +59,63 @@ Build an enterprise-grade management platform for Achieve Together Care (NDIS pr
 - ✅ Wednesday Master Sync schedule
 - ⚠️ **MOCKED API** - Requires Google OAuth credentials for real sync
 
+### Phase 7: Public Landing Page with Google Maps ✅
+**Date:** April 2, 2026  
+**Status:** COMPLETED
+
+**1. Public Landing Page (`/app/frontend/src/pages/HomePage.jsx`)**
+- ✅ Hero Section: "More Than Just Care" headline with gradient text
+- ✅ NDIS Registered Provider badge
+- ✅ Trust indicators (NDIS Registered, Fully Insured, Experienced Team, 24/7 Support)
+- ✅ Two CTAs: "Get Started Today" and "Explore Services"
+- ✅ Smooth scroll navigation
+
+**2. Services Section**
+- ✅ 4 service cards with gradient icons
+- ✅ Capacity Building, Daily Living Support, Community Access, Plan Management
+- ✅ Hover animations and Learn More links
+
+**3. How It Works Section**
+- ✅ 4-step process with numbered cards
+- ✅ Get in Touch → Initial Consultation → Personalized Plan → Begin Your Journey
+
+**4. Testimonials Section**
+- ✅ 3 testimonial cards with gradient backgrounds
+- ✅ 5-star ratings with user names and roles
+
+**5. Contact Section with Google Maps**
+- ✅ Contact form (name, email, phone, message)
+- ✅ Form submission with success message
+- ✅ Google Maps embed with dark theme styling
+- ✅ Sydney location with custom marker
+- ✅ Contact info cards (Phone, Email, Address)
+
+**6. Routing Refactor**
+- ✅ `/` → Public landing page (no auth required)
+- ✅ `/login` → Login page
+- ✅ `/dashboard` → Protected Owner Portal
+
 ## Test Results (April 2, 2026)
 
-### Iteration 5 - PDF, Website & G-Drive
-- Backend: 100% (39/39 tests passed)
-- Frontend: 100% (22 UI flows verified)
-- Bugs Fixed: 2 (G-Drive prefix, jspdf-autotable import)
-- All new features working correctly
+### Iteration 6 - Public Landing Page with Google Maps
+- Frontend: 100% (40+ UI flows verified)
+- All landing page sections working correctly
+- Google Maps API integrated with dark theme
+- Login flow redirects to dashboard successfully
 
 ## Architecture
 
 ```
 /app
  ├── frontend/src/
+ │    ├── pages/
+ │    │    ├── HomePage.jsx [NEW - Public Landing Page]
+ │    │    ├── LoginPage.jsx
+ │    │    └── AuthCallback.jsx
  │    ├── components/
  │    │    ├── portals/ (OwnerPortal.jsx - 13 nav items)
- │    │    ├── website/ (WebsiteIntegration.jsx) [NEW]
- │    │    ├── gdrive/ (GDriveSyncComponent.jsx) [NEW]
+ │    │    ├── website/ (WebsiteIntegration.jsx)
+ │    │    ├── gdrive/ (GDriveSyncComponent.jsx)
  │    │    ├── crm/ (SmartOutreach.jsx)
  │    │    ├── staff/ (StaffManagement.jsx)
  │    │    ├── clients/ (ClientManagement.jsx)
@@ -84,13 +124,13 @@ Build an enterprise-grade management platform for Achieve Together Care (NDIS pr
  │    │    └── compliance/ (ComplianceManagement.jsx)
  │    ├── services/
  │    │    ├── api.js
- │    │    └── pdfService.js [NEW]
- │    └── App.js
+ │    │    └── pdfService.js
+ │    └── App.js (Updated routing)
  └── backend/
       ├── routers/
       │    ├── auth.py, dashboard.py, staff.py, clients.py
       │    ├── ai.py, payroll.py, compliance.py
-      │    └── gdrive.py [NEW - MOCKED]
+      │    └── gdrive.py [MOCKED]
       └── server.py
 ```
 
@@ -102,6 +142,7 @@ Build an enterprise-grade management platform for Achieve Together Care (NDIS pr
 - ✅ PDF Generation
 - ✅ Website Integration
 - ✅ Google Drive Sync (Demo Mode)
+- ✅ Public Landing Page with Google Maps
 
 ### P1 - Email Sending Integration (BLOCKED)
 - [ ] Resend API integration for actual email delivery
@@ -112,12 +153,14 @@ Build an enterprise-grade management platform for Achieve Together Care (NDIS pr
 - [ ] Real file sync with Drive API
 - **REQUIRES:** Google Cloud Console project + OAuth credentials
 
-### P3 - Future Features
+### P2 - Future Features
 - [ ] Service Flyer PDF
 - [ ] Digital Business Card vCard
 - [ ] Analytics dashboard with charts
 - [ ] Multi-user support (team members)
 - [ ] Incident logging and tracking
+- [ ] Clinical OS enhancements
+- [ ] Quick Shift Reporting AI workflows
 
 ## API Endpoints
 
@@ -130,7 +173,9 @@ Build an enterprise-grade management platform for Achieve Together Care (NDIS pr
 See `/app/memory/test_credentials.md`
 
 ## Notes
-- All 5 testing iterations passed with 100% success rate
+- All 6 testing iterations passed with 100% success rate
 - PDF generation is client-side (no server dependency)
 - Google Drive is in demo mode until OAuth credentials are provided
 - Email sending requires Resend API key from user
+- Google Maps API Key configured in frontend/.env
+- Contact form is demo mode (frontend only, would need backend endpoint for real email)
