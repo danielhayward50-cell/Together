@@ -4,9 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import { 
   Heart, Phone, Mail, MapPin, ArrowRight, Menu, X, 
   Star, Shield, Users, Clock, Target, Sparkles,
-  ChevronRight, CheckCircle2, Calendar, FileText
+  ChevronRight, CheckCircle2, Calendar, FileText, Loader2
 } from 'lucide-react';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+
+const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 // Google Maps configuration
 const mapContainerStyle = {
@@ -132,13 +134,84 @@ export function HomePage() {
     message: ''
   });
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [formLoading, setFormLoading] = useState(false);
+  const [formError, setFormError] = useState('');
+  
+  // Booking modal state
+  const [showBookingModal, setShowBookingModal] = useState(false);
+  const [bookingForm, setBookingForm] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    preferred_date: '',
+    preferred_time: '',
+    service_type: '',
+    notes: ''
+  });
+  const [bookingSubmitted, setBookingSubmitted] = useState(false);
+  const [bookingLoading, setBookingLoading] = useState(false);
+  const [bookingError, setBookingError] = useState('');
 
-  const handleContactSubmit = (e) => {
+  const handleContactSubmit = async (e) => {
     e.preventDefault();
-    // Demo - would connect to backend in production
-    setFormSubmitted(true);
-    setTimeout(() => setFormSubmitted(false), 3000);
-    setContactForm({ name: '', email: '', phone: '', message: '' });
+    setFormLoading(true);
+    setFormError('');
+    
+    try {
+      const response = await fetch(`${API_URL}/api/contact/inquiry`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...contactForm,
+          source: 'landing_page'
+        })
+      });
+      
+      if (!response.ok) throw new Error('Failed to submit inquiry');
+      
+      setFormSubmitted(true);
+      setContactForm({ name: '', email: '', phone: '', message: '' });
+      setTimeout(() => setFormSubmitted(false), 5000);
+    } catch (error) {
+      setFormError('Something went wrong. Please try again or call us directly.');
+    } finally {
+      setFormLoading(false);
+    }
+  };
+
+  const handleBookingSubmit = async (e) => {
+    e.preventDefault();
+    setBookingLoading(true);
+    setBookingError('');
+    
+    try {
+      const response = await fetch(`${API_URL}/api/contact/booking`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(bookingForm)
+      });
+      
+      if (!response.ok) throw new Error('Failed to submit booking');
+      
+      setBookingSubmitted(true);
+      setBookingForm({
+        name: '',
+        email: '',
+        phone: '',
+        preferred_date: '',
+        preferred_time: '',
+        service_type: '',
+        notes: ''
+      });
+      setTimeout(() => {
+        setBookingSubmitted(false);
+        setShowBookingModal(false);
+      }, 3000);
+    } catch (error) {
+      setBookingError('Something went wrong. Please try again or call us directly.');
+    } finally {
+      setBookingLoading(false);
+    }
   };
 
   const scrollToSection = (id) => {
@@ -245,12 +318,12 @@ export function HomePage() {
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <button 
-                onClick={() => scrollToSection('contact')}
+                onClick={() => setShowBookingModal(true)}
                 className="group w-full sm:w-auto bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-400 hover:to-cyan-400 text-slate-900 font-black uppercase tracking-wider px-8 py-4 rounded-2xl shadow-xl shadow-teal-500/30 transition-all flex items-center justify-center gap-3"
                 data-testid="hero-cta-primary"
               >
-                Get Started Today
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                <Calendar className="w-5 h-5" />
+                Book Free Consultation
               </button>
               <button 
                 onClick={() => scrollToSection('services')}
@@ -430,6 +503,11 @@ export function HomePage() {
                 </div>
               ) : (
                 <form onSubmit={handleContactSubmit} className="space-y-5">
+                  {formError && (
+                    <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-4">
+                      <p className="text-red-400 text-sm font-bold">{formError}</p>
+                    </div>
+                  )}
                   <div>
                     <label className="text-xs font-black text-slate-400 uppercase tracking-widest mb-2 block">Your Name</label>
                     <input
@@ -439,6 +517,7 @@ export function HomePage() {
                       placeholder="John Smith"
                       className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-white placeholder-slate-500 focus:outline-none focus:border-teal-500/50 focus:ring-2 focus:ring-teal-500/20 transition-all"
                       required
+                      disabled={formLoading}
                       data-testid="contact-name"
                     />
                   </div>
@@ -452,6 +531,7 @@ export function HomePage() {
                         placeholder="you@example.com"
                         className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-white placeholder-slate-500 focus:outline-none focus:border-teal-500/50 focus:ring-2 focus:ring-teal-500/20 transition-all"
                         required
+                        disabled={formLoading}
                         data-testid="contact-email"
                       />
                     </div>
@@ -463,6 +543,7 @@ export function HomePage() {
                         onChange={(e) => setContactForm({...contactForm, phone: e.target.value})}
                         placeholder="0400 000 000"
                         className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-white placeholder-slate-500 focus:outline-none focus:border-teal-500/50 focus:ring-2 focus:ring-teal-500/20 transition-all"
+                        disabled={formLoading}
                         data-testid="contact-phone"
                       />
                     </div>
@@ -476,16 +557,24 @@ export function HomePage() {
                       rows={4}
                       className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-white placeholder-slate-500 focus:outline-none focus:border-teal-500/50 focus:ring-2 focus:ring-teal-500/20 transition-all resize-none"
                       required
+                      disabled={formLoading}
                       data-testid="contact-message"
                     />
                   </div>
                   <button
                     type="submit"
-                    className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-400 hover:to-cyan-400 text-slate-900 font-black uppercase tracking-wider py-4 rounded-xl shadow-lg shadow-teal-500/30 transition-all flex items-center justify-center gap-3"
+                    disabled={formLoading}
+                    className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-400 hover:to-cyan-400 text-slate-900 font-black uppercase tracking-wider py-4 rounded-xl shadow-lg shadow-teal-500/30 transition-all flex items-center justify-center gap-3 disabled:opacity-50"
                     data-testid="contact-submit"
                   >
-                    Send Message
-                    <ArrowRight className="w-5 h-5" />
+                    {formLoading ? (
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                    ) : (
+                      <>
+                        Send Message
+                        <ArrowRight className="w-5 h-5" />
+                      </>
+                    )}
                   </button>
                 </form>
               )}
@@ -583,6 +672,182 @@ export function HomePage() {
           </div>
         </div>
       </footer>
+
+      {/* Booking Modal */}
+      {showBookingModal && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm" data-testid="booking-modal">
+          <div className="bg-slate-800 border border-white/10 rounded-3xl p-8 w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-2xl">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h3 className="text-2xl font-black text-white">Book Free Consultation</h3>
+                <p className="text-slate-400 text-sm mt-1">Schedule a no-obligation chat about your needs</p>
+              </div>
+              <button 
+                onClick={() => setShowBookingModal(false)}
+                className="w-10 h-10 bg-white/5 hover:bg-white/10 rounded-xl flex items-center justify-center transition-colors"
+                data-testid="booking-modal-close"
+              >
+                <X className="w-5 h-5 text-slate-400" />
+              </button>
+            </div>
+
+            {bookingSubmitted ? (
+              <div className="bg-teal-500/10 border border-teal-500/20 rounded-2xl p-8 text-center">
+                <CheckCircle2 className="w-16 h-16 text-teal-400 mx-auto mb-4" />
+                <p className="text-xl text-teal-400 font-bold">Booking Request Submitted!</p>
+                <p className="text-slate-400 mt-2">We'll confirm your appointment within 24 hours.</p>
+              </div>
+            ) : (
+              <form onSubmit={handleBookingSubmit} className="space-y-4">
+                {bookingError && (
+                  <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-4">
+                    <p className="text-red-400 text-sm font-bold">{bookingError}</p>
+                  </div>
+                )}
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-xs font-black text-slate-400 uppercase tracking-widest mb-2 block">Your Name *</label>
+                    <input
+                      type="text"
+                      value={bookingForm.name}
+                      onChange={(e) => setBookingForm({...bookingForm, name: e.target.value})}
+                      placeholder="John Smith"
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-teal-500/50 focus:ring-2 focus:ring-teal-500/20 transition-all"
+                      required
+                      disabled={bookingLoading}
+                      data-testid="booking-name"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-xs font-black text-slate-400 uppercase tracking-widest mb-2 block">Phone *</label>
+                    <input
+                      type="tel"
+                      value={bookingForm.phone}
+                      onChange={(e) => setBookingForm({...bookingForm, phone: e.target.value})}
+                      placeholder="0400 000 000"
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-teal-500/50 focus:ring-2 focus:ring-teal-500/20 transition-all"
+                      required
+                      disabled={bookingLoading}
+                      data-testid="booking-phone"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="text-xs font-black text-slate-400 uppercase tracking-widest mb-2 block">Email *</label>
+                  <input
+                    type="email"
+                    value={bookingForm.email}
+                    onChange={(e) => setBookingForm({...bookingForm, email: e.target.value})}
+                    placeholder="you@example.com"
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-teal-500/50 focus:ring-2 focus:ring-teal-500/20 transition-all"
+                    required
+                    disabled={bookingLoading}
+                    data-testid="booking-email"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-xs font-black text-slate-400 uppercase tracking-widest mb-2 block">Service Type *</label>
+                  <select
+                    value={bookingForm.service_type}
+                    onChange={(e) => setBookingForm({...bookingForm, service_type: e.target.value})}
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-teal-500/50 focus:ring-2 focus:ring-teal-500/20 transition-all"
+                    required
+                    disabled={bookingLoading}
+                    data-testid="booking-service"
+                  >
+                    <option value="" className="bg-slate-800">Select a service...</option>
+                    <option value="capacity_building" className="bg-slate-800">Capacity Building</option>
+                    <option value="daily_living" className="bg-slate-800">Daily Living Support</option>
+                    <option value="community_access" className="bg-slate-800">Community Access</option>
+                    <option value="plan_management" className="bg-slate-800">Plan Management</option>
+                    <option value="general_inquiry" className="bg-slate-800">General Inquiry</option>
+                  </select>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-xs font-black text-slate-400 uppercase tracking-widest mb-2 block">Preferred Date *</label>
+                    <input
+                      type="date"
+                      value={bookingForm.preferred_date}
+                      onChange={(e) => setBookingForm({...bookingForm, preferred_date: e.target.value})}
+                      min={new Date().toISOString().split('T')[0]}
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-teal-500/50 focus:ring-2 focus:ring-teal-500/20 transition-all"
+                      required
+                      disabled={bookingLoading}
+                      data-testid="booking-date"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-xs font-black text-slate-400 uppercase tracking-widest mb-2 block">Preferred Time *</label>
+                    <select
+                      value={bookingForm.preferred_time}
+                      onChange={(e) => setBookingForm({...bookingForm, preferred_time: e.target.value})}
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-teal-500/50 focus:ring-2 focus:ring-teal-500/20 transition-all"
+                      required
+                      disabled={bookingLoading}
+                      data-testid="booking-time"
+                    >
+                      <option value="" className="bg-slate-800">Select time...</option>
+                      <option value="09:00" className="bg-slate-800">9:00 AM</option>
+                      <option value="10:00" className="bg-slate-800">10:00 AM</option>
+                      <option value="11:00" className="bg-slate-800">11:00 AM</option>
+                      <option value="12:00" className="bg-slate-800">12:00 PM</option>
+                      <option value="13:00" className="bg-slate-800">1:00 PM</option>
+                      <option value="14:00" className="bg-slate-800">2:00 PM</option>
+                      <option value="15:00" className="bg-slate-800">3:00 PM</option>
+                      <option value="16:00" className="bg-slate-800">4:00 PM</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="text-xs font-black text-slate-400 uppercase tracking-widest mb-2 block">Additional Notes</label>
+                  <textarea
+                    value={bookingForm.notes}
+                    onChange={(e) => setBookingForm({...bookingForm, notes: e.target.value})}
+                    placeholder="Any specific requirements or questions..."
+                    rows={3}
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-teal-500/50 focus:ring-2 focus:ring-teal-500/20 transition-all resize-none"
+                    disabled={bookingLoading}
+                    data-testid="booking-notes"
+                  />
+                </div>
+
+                <div className="flex gap-3 pt-4">
+                  <button
+                    type="button"
+                    onClick={() => setShowBookingModal(false)}
+                    className="flex-1 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold py-4 rounded-xl transition-all"
+                    disabled={bookingLoading}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={bookingLoading}
+                    className="flex-1 bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-400 hover:to-cyan-400 text-slate-900 font-black uppercase tracking-wider py-4 rounded-xl shadow-lg shadow-teal-500/30 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+                    data-testid="booking-submit"
+                  >
+                    {bookingLoading ? (
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                    ) : (
+                      <>
+                        <Calendar className="w-5 h-5" />
+                        Book Consultation
+                      </>
+                    )}
+                  </button>
+                </div>
+              </form>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

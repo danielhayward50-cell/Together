@@ -67,7 +67,7 @@ Build an enterprise-grade management platform for Achieve Together Care (NDIS pr
 - ✅ Hero Section: "More Than Just Care" headline with gradient text
 - ✅ NDIS Registered Provider badge
 - ✅ Trust indicators (NDIS Registered, Fully Insured, Experienced Team, 24/7 Support)
-- ✅ Two CTAs: "Get Started Today" and "Explore Services"
+- ✅ Two CTAs: "Book Free Consultation" modal and "Explore Services"
 - ✅ Smooth scroll navigation
 
 **2. Services Section**
@@ -84,13 +84,28 @@ Build an enterprise-grade management platform for Achieve Together Care (NDIS pr
 - ✅ 5-star ratings with user names and roles
 
 **5. Contact Section with Google Maps**
-- ✅ Contact form (name, email, phone, message)
+- ✅ Contact form with backend storage (MongoDB)
 - ✅ Form submission with success message
 - ✅ Google Maps embed with dark theme styling
 - ✅ Sydney location with custom marker
 - ✅ Contact info cards (Phone, Email, Address)
 
-**6. Routing Refactor**
+**6. Booking System**
+- ✅ "Book Free Consultation" modal with full form
+- ✅ Service type selection, date/time picker
+- ✅ Backend API for storing bookings (`/api/contact/booking`)
+- ✅ Booking stats endpoint (`/api/contact/stats`)
+
+**7. Backend Contact/Booking APIs (`/app/backend/routers/contact.py`)**
+- ✅ POST `/api/contact/inquiry` - Store contact inquiries
+- ✅ GET `/api/contact/inquiries` - List all inquiries
+- ✅ PATCH `/api/contact/inquiry/{id}/status` - Update inquiry status
+- ✅ POST `/api/contact/booking` - Store consultation bookings
+- ✅ GET `/api/contact/bookings` - List all bookings
+- ✅ PATCH `/api/contact/booking/{id}/status` - Update booking status
+- ✅ GET `/api/contact/stats` - Get inquiry/booking statistics
+
+**8. Routing Refactor**
 - ✅ `/` → Public landing page (no auth required)
 - ✅ `/login` → Login page
 - ✅ `/dashboard` → Protected Owner Portal
@@ -164,7 +179,16 @@ Build an enterprise-grade management platform for Achieve Together Care (NDIS pr
 
 ## API Endpoints
 
-### New Endpoints (Phase 6)
+### Contact & Booking Endpoints (Phase 7) - NEW
+- `POST /api/contact/inquiry` - Submit contact inquiry (stored in MongoDB)
+- `GET /api/contact/inquiries` - List all inquiries (admin)
+- `PATCH /api/contact/inquiry/{id}/status` - Update inquiry status
+- `POST /api/contact/booking` - Submit consultation booking
+- `GET /api/contact/bookings` - List all bookings (admin)
+- `PATCH /api/contact/booking/{id}/status` - Update booking status
+- `GET /api/contact/stats` - Get inquiry/booking statistics
+
+### Google Drive Endpoints (Phase 6)
 - `GET /api/gdrive/status` - Get Drive status and folders (MOCKED)
 - `POST /api/gdrive/sync` - Trigger sync (MOCKED)
 - `POST /api/gdrive/connect` - Initiate OAuth (returns setup instructions)
@@ -178,4 +202,5 @@ See `/app/memory/test_credentials.md`
 - Google Drive is in demo mode until OAuth credentials are provided
 - Email sending requires Resend API key from user
 - Google Maps API Key configured in frontend/.env
-- Contact form is demo mode (frontend only, would need backend endpoint for real email)
+- Contact form and booking system now fully functional with MongoDB storage
+- New MongoDB collections: `contact_inquiries`, `consultation_bookings`
