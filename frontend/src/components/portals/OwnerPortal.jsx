@@ -8,12 +8,8 @@ import { STAFF, CLIENTS, INVOICES, REPORTS, dashboardStats } from '../../lib/dat
 import { getComplianceScore, getExpiredDocuments, getExpiringDocuments } from '../../lib/compliance';
 import useIsMobile from '../../hooks/useIsMobile';
 
-interface OwnerPortalProps {
-  onLogout?: () => void;
-}
-
-export function OwnerPortal({ onLogout }: OwnerPortalProps) {
-  const [activeSection, setActiveSection] = useState<string>('dashboard');
+export function OwnerPortal({ onLogout }) {
+  const [activeSection, setActiveSection] = useState('dashboard');
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const isMobile = useIsMobile();
 
