@@ -28,6 +28,27 @@ export const C = {
   purple: "#5B2D8E",
 };
 
+// Dashboard Stats (defined early to avoid circular dependency)
+export const dashboardStats = {
+  revenue: {
+    amount: 18450.00,
+    change: 12,
+    period: "Mar 2026"
+  },
+  outreachROI: {
+    percentage: 24,
+    newIntakes: 3
+  },
+  ndisBurnRate: {
+    dailyRate: 615.00,
+    percentage: 72
+  },
+  complianceAlert: {
+    count: 1,
+    message: "Staff Doc Expiry Warning"
+  }
+};
+
 // Owner details
 export const OWNER = {
   name: "Daniel Hayward",
@@ -229,10 +250,105 @@ export const NDIS_SUPPORT_ITEMS = [
   },
 ];
 
+// Client/Participant data
+export const CLIENTS = [
+  {
+    id: 1,
+    name: "Shaun Case",
+    ndisNumber: "431005774",
+    phone: "0412 345 678",
+    email: "shaun.case@email.com",
+    address: "123 Main St, Nowra NSW 2541",
+    emergencyContact: "Mary Case (Mother)",
+    emergencyPhone: "0423 456 789",
+    dob: "1995-03-15",
+    goals: [
+      "Improve daily living skills and independence",
+      "Develop social connections in community",
+      "Increase participation in recreational activities",
+      "Build confidence in public transport use",
+    ],
+    planManager: "Plan Partners NSW",
+    planManagerEmail: "support@planpartners.com.au",
+    supportCoordinator: "Emma Wilson",
+    fundingType: "Plan Managed",
+    planStartDate: "2025-07-01",
+    planEndDate: "2026-06-30",
+    weeklyHours: 15,
+    supportWorkers: ["Daniel Hayward"],
+  },
+];
+
+// Reports data
+export const REPORTS = [
+  {
+    id: 1,
+    type: "daily",
+    title: "Daily Shift Report - Shaun Case",
+    date: "2026-02-09",
+    author: "Daniel Hayward",
+    status: "completed",
+    participant: "Shaun Case",
+    ndisNumber: "431005774",
+    hours: 6,
+    km: 15,
+    mood: "Happy and engaged",
+    shiftTime: "09:00 - 15:00",
+    sections: [
+      { t: "Summary", c: "6-hour community access shift. Shaun was in good spirits throughout." },
+      { t: "Activities", c: "Shopping at local supermarket, budgeting practice, social interaction" },
+    ],
+  },
+];
+
+// Invoice data
+export const INVOICES: Invoice[] = [
+  {
+    invoiceNo: "ATC-2026-001",
+    date: "2026-02-28",
+    period: "February 2026",
+    client: "Shaun Case",
+    ndisNumber: "431005774",
+    worker: "Daniel Hayward",
+    fundingManager: "Plan Partners NSW",
+    lines: [
+      {
+        date: "2026-02-09",
+        description: "Community Access Support",
+        ndisCode: "01_002_0107_1_1",
+        qty: 6,
+        unit: "hours",
+        rate: 70.23,
+        total: 421.38,
+      },
+      {
+        date: "2026-02-09",
+        description: "Provider Travel",
+        ndisCode: "09_799_0106_6_3",
+        qty: 15,
+        unit: "km",
+        rate: 0.95,
+        total: 14.25,
+      },
+    ],
+    totalHours: 6,
+    totalKm: 15,
+    totalTravel: 14.25,
+    totalPayable: 435.63,
+    status: "draft",
+  },
+];
+
 export default {
   C,
   OWNER,
   STAFF,
+  CLIENTS,
   SHIFTS,
+  REPORTS,
+  INVOICES,
   NDIS_SUPPORT_ITEMS,
+  dashboardStats,
 };
+
+
