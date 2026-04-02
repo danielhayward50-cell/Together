@@ -11,6 +11,10 @@ import useIsMobile from '../../hooks/useIsMobile';
 import ComprehensiveCalendar from '../calendar/ComprehensiveCalendar';
 import QuickShiftReport from '../automation/QuickShiftReport';
 import SmartOutreach from '../crm/SmartOutreach';
+import StaffManagement from '../staff/StaffManagement';
+import ClientManagement from '../clients/ClientManagement';
+import InvoiceManagement from '../invoices/InvoiceManagement';
+import ReportManagement from '../reports/ReportManagement';
 import { useAuth } from '../../context/AuthContext';
 import { dashboardAPI, staffAPI, clientsAPI, invoicesAPI, reportsAPI } from '../../services/api';
 
@@ -262,15 +266,15 @@ export function OwnerPortal() {
           </div>
         );
       case 'staff':
-        return <PlaceholderSection title="Staff Management" description="Staff profiles and compliance tracking" />;
+        return <StaffManagement />;
       case 'clients':
-        return <PlaceholderSection title="Client Management" description="Participant information and plans" />;
+        return <ClientManagement />;
       case 'payroll':
         return <PlaceholderSection title="Payroll" description="SCHADS payroll management system" />;
       case 'invoices':
-        return <PlaceholderSection title="Invoices" description="NDIS invoice creation and tracking" />;
+        return <InvoiceManagement />;
       case 'reports':
-        return <PlaceholderSection title="Reports" description="All shift and incident reports" />;
+        return <ReportManagement />;
       case 'compliance':
         return <PlaceholderSection title="Compliance" description="Document tracking and alerts" />;
       case 'settings':
