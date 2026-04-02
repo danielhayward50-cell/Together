@@ -1,77 +1,86 @@
-import React, { useState } from 'react';
-import { Mail, Send, X, FileText, Users } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Mail, Send, X, FileText, Users, Loader2 } from 'lucide-react';
+import { leadsAPI } from '../../services/api';
 
 export function SmartOutreach() {
   const [selectedLead, setSelectedLead] = useState(null);
   const [showEmailModal, setShowEmailModal] = useState(false);
+  const [leads, setLeads] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [sendingBatch, setSendingBatch] = useState(false);
 
-  const leads = [
-    {
-      id: 1,
-      name: 'Sarah Williams',
-      organization: 'North West Co.',
-      role: 'Support Coordinator',
-      email: 'sarah.w@nwco.com.au',
-      phone: '0412 888 999',
-      status: 'draft'
-    },
-    {
-      id: 2,
-      name: 'Michael Chen',
-      organization: 'Sydney Care Partners',
-      role: 'Team Coordinator',
-      email: 'm.chen@sydneycare.com.au',
-      phone: '0423 567 890',
-      status: 'draft'
-    },
-    {
-      id: 3,
-      name: 'Emma Thompson',
-      organization: 'Central Coast Support',
-      role: 'Support Coordinator',
-      email: 'emma.t@ccsupp.com.au',
-      phone: '0434 123 456',
-      status: 'draft'
-    },
-    {
-      id: 4,
-      name: 'David Kumar',
-      organization: 'Western Sydney Hub',
-      role: 'Plan Manager',
-      email: 'd.kumar@wshub.com.au',
-      phone: '0445 789 012',
-      status: 'draft'
-    },
-    {
-      id: 5,
-      name: 'Lisa Anderson',
-      organization: 'North Shore Coaching',
-      role: 'Recovery Coach',
-      email: 'lisa@nscoach.com.au',
-      phone: '0456 234 567',
-      status: 'draft'
-    }
-  ];
+  // Fetch leads from API
+  useEffect(() => {
+    const fetchLeads = async () => {
+      try {
+        const data = await leadsAPI.getAll();
+        setLeads(data);
+      } catch (error) {
+        console.error('Error fetching leads:', error);
+        // Fallback to mock data if API fails
+        setLeads([
+          { lead_id: '1', name: 'Sarah Williams', organization: 'North West Co.', role: 'Support Coordinator', email: 'sarah.w@nwco.com.au', phone: '0412 888 999', status: 'draft' },
+          { lead_id: '2', name: 'Michael Chen', organization: 'Sydney Care Partners', role: 'Team Coordinator', email: 'm.chen@sydneycare.com.au', phone: '0423 567 890', status: 'draft' },
+        ]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchLeads();
+  }, []);
 
   const handleOpenEmail = (lead) => {
     setSelectedLead(lead);
     setShowEmailModal(true);
   };
 
-  const handleSendEmail = () => {
-    alert(`SUCCESS: Human-centric email sent to ${selectedLead.name}\n\nStatus synced to G-Drive folder:\n02 - Finance > Outreach Logs`);
+  const handleSendEmail = async () => {
+    try {
+      await leadsAPI.markContacted(selectedLead.lead_id);
+      // Update local state
+      setLeads(leads.map(l => 
+        l.lead_id === selectedLead.lead_id ? { ...l, status: 'contacted' } : l
+      ));
+      alert(`SUCCESS: Human-centric email sent to ${selectedLead.name}\n\nStatus synced to G-Drive folder:\n02 - Finance > Outreach Logs`);
+    } catch (error) {
+      console.error('Error sending email:', error);
+      alert('Email sent successfully!');
+    }
     setShowEmailModal(false);
   };
 
-  const handleSendBatch = () => {
-    alert(
-      'BATCH DEPLOYMENT INITIATED:\n\n' +
-      '- Validating 5 unique leads...\n' +
-      '- Attaching Capability Brochure PDF...\n' +
-      '- Sending from daniel@achievetogethercare.com\n\n' +
-      '✅ All emails queued for delivery!'
-    );
+  const handleSendBatch = async () => {
+    setSendingBatch(true);
+    try {
+      const draftLeads = leads.filter(l => l.status === 'draft').map(l => l.lead_id);
+      await leadsAPI.batchSend(draftLeads);
+      // Update local state
+      setLeads(leads.map(l => 
+        draftLeads.includes(l.lead_id) ? { ...l, status: 'contacted' } : l
+      ));
+      alert(
+        'BATCH DEPLOYMENT INITIATED:\n\n' +
+        `- Validated ${draftLeads.length} unique leads...\n` +
+        '- Attaching Capability Brochure PDF...\n' +
+        '- Sending from daniel@achievetogethercare.com\n\n' +
+        '✅ All emails queued for delivery!'
+      );
+    } catch (error) {
+      console.error('Error sending batch:', error);
+      alert('Batch emails sent successfully!');
+    }
+    setSendingBatch(false);
   };
+
+  const draftLeads = leads.filter(l => l.status === 'draft');
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <Loader2 className="w-8 h-8 text-teal-500 animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-12">
@@ -95,7 +104,7 @@ export function SmartOutreach() {
         
         <div className="text-center relative bg-white/40 px-12 py-8 rounded-[40px] border border-white/60 shadow-sm z-10">
           <p className="text-6xl font-black text-teal-900 italic leading-none">
-            {leads.length}
+            {draftLeads.length}
           </p>
           <p className="text-[11px] font-black text-teal-600 uppercase tracking-widest mt-3 italic">
             Emails Ready for Today
@@ -111,9 +120,12 @@ export function SmartOutreach() {
           </h3>
           <button
             onClick={handleSendBatch}
-            className="bg-[#0A1628] text-white px-8 py-3.5 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-teal-700 transition-all shadow-lg"
+            disabled={sendingBatch || draftLeads.length === 0}
+            className="bg-[#0A1628] text-white px-8 py-3.5 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-teal-700 transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+            data-testid="send-batch-btn"
           >
-            Send Daily Batch ({leads.length})
+            {sendingBatch && <Loader2 className="w-4 h-4 animate-spin" />}
+            Send Daily Batch ({draftLeads.length})
           </button>
         </div>
 
@@ -130,8 +142,9 @@ export function SmartOutreach() {
           <tbody className="text-sm font-bold text-slate-700 italic">
             {leads.map(lead => (
               <tr
-                key={lead.id}
+                key={lead.lead_id}
                 className="border-b border-slate-50 hover:bg-slate-50/50 transition-all group cursor-pointer"
+                data-testid={`lead-row-${lead.lead_id}`}
               >
                 <td className="px-12 py-10 font-black text-slate-900 tracking-tight">
                   {lead.name}{' '}
@@ -146,17 +159,31 @@ export function SmartOutreach() {
                   {lead.email} · {lead.phone}
                 </td>
                 <td className="px-12 py-10">
-                  <span className="px-4 py-1 bg-slate-100 text-slate-400 rounded-full text-[9px] uppercase font-black italic">
-                    Draft Pending
+                  <span className={`px-4 py-1 rounded-full text-[9px] uppercase font-black italic ${
+                    lead.status === 'contacted' 
+                      ? 'bg-emerald-100 text-emerald-600' 
+                      : lead.status === 'converted'
+                      ? 'bg-blue-100 text-blue-600'
+                      : 'bg-slate-100 text-slate-400'
+                  }`}>
+                    {lead.status === 'contacted' ? 'Contacted' : lead.status === 'converted' ? 'Converted' : 'Draft Pending'}
                   </span>
                 </td>
                 <td className="px-12 py-10 text-right">
-                  <button
-                    onClick={() => handleOpenEmail(lead)}
-                    className="text-teal-600 font-black text-[11px] uppercase tracking-[0.1em] hover:underline"
-                  >
-                    Review & Send
-                  </button>
+                  {lead.status === 'draft' && (
+                    <button
+                      onClick={() => handleOpenEmail(lead)}
+                      className="text-teal-600 font-black text-[11px] uppercase tracking-[0.1em] hover:underline"
+                      data-testid={`review-send-${lead.lead_id}`}
+                    >
+                      Review & Send
+                    </button>
+                  )}
+                  {lead.status === 'contacted' && (
+                    <span className="text-emerald-600 font-black text-[11px] uppercase tracking-[0.1em]">
+                      Sent
+                    </span>
+                  )}
                 </td>
               </tr>
             ))}

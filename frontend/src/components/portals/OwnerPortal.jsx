@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
   LayoutDashboard, Users, FileText, DollarSign, Calendar,
   Settings, HelpCircle, LogOut, Menu, X, Bell, Search,
@@ -10,28 +11,79 @@ import useIsMobile from '../../hooks/useIsMobile';
 import ComprehensiveCalendar from '../calendar/ComprehensiveCalendar';
 import QuickShiftReport from '../automation/QuickShiftReport';
 import SmartOutreach from '../crm/SmartOutreach';
+import { useAuth } from '../../context/AuthContext';
+import { dashboardAPI, staffAPI, clientsAPI, invoicesAPI, reportsAPI } from '../../services/api';
 
-export function OwnerPortal({ onLogout }) {
+export function OwnerPortal() {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState('dashboard');
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [selectedShift, setSelectedShift] = useState(null);
   const [showQuickReport, setShowQuickReport] = useState(false);
   const isMobile = useIsMobile();
 
-  // Dashboard stats
-  const totalStaff = STAFF.length;
-  const totalClients = CLIENTS.length;
-  const totalInvoices = INVOICES.length;
-  const pendingInvoices = INVOICES.filter(inv => inv.status === 'pending' || inv.status === 'draft').length;
+  // API data states
+  const [stats, setStats] = useState(null);
+  const [apiStaff, setApiStaff] = useState([]);
+  const [apiClients, setApiClients] = useState([]);
+  const [apiReports, setApiReports] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch data on mount
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [statsData, staffData, clientsData, reportsData] = await Promise.all([
+          dashboardAPI.getStats(),
+          staffAPI.getAll(),
+          clientsAPI.getAll(),
+          reportsAPI.getAll({ limit: 10 })
+        ]);
+        setStats(statsData);
+        setApiStaff(staffData);
+        setApiClients(clientsData);
+        setApiReports(reportsData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
+  // Handle logout
+  const handleLogout = async () => {
+    await logout();
+    navigate('/login');
+  };
+
+  // Use API data with fallback to mock
+  const totalStaff = apiStaff.length > 0 ? apiStaff.length : STAFF.length;
+  const totalClients = apiClients.length > 0 ? apiClients.length : CLIENTS.length;
+  const totalInvoices = stats?.invoices?.total || INVOICES.length;
+  const pendingInvoices = stats?.invoices?.pending || INVOICES.filter(inv => inv.status === 'pending' || inv.status === 'draft').length;
   
-  // Compliance stats
-  const allDocs = STAFF.flatMap(s => s.compliance);
-  const complianceScore = getComplianceScore(allDocs);
-  const expiredDocs = getExpiredDocuments(allDocs);
-  const expiringDocs = getExpiringDocuments(allDocs, 30);
+  // Compliance stats - use API or fallback
+  const allDocs = apiStaff.length > 0 
+    ? apiStaff.flatMap(s => s.compliance || [])
+    : STAFF.flatMap(s => s.compliance);
+  const complianceScore = stats?.compliance?.score || getComplianceScore(allDocs);
+  const expiredDocs = stats?.compliance?.expired_docs || getExpiredDocuments(allDocs);
+  const expiringDocs = stats?.compliance?.expiring_docs || getExpiringDocuments(allDocs, 30);
+
+  // Revenue from API
+  const revenueAmount = stats?.revenue?.amount || dashboardStats.revenue.amount;
+  const revenueChange = stats?.revenue?.change || dashboardStats.revenue.change;
+  const revenuePeriod = stats?.revenue?.period || dashboardStats.revenue.period;
+
+  // Recent reports from API or fallback
+  const recentReports = apiReports.length > 0 ? apiReports : REPORTS;
 
   const navItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
+    { id: 'crm', label: 'Smart Outreach', icon: Rocket },
     { id: 'calendar', label: 'Calendar', icon: Calendar },
     { id: 'staff', label: 'Staff', icon: Users },
     { id: 'clients', label: 'Clients', icon: Users },
@@ -72,9 +124,9 @@ export function OwnerPortal({ onLogout }) {
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatCard
-          title="Revenue (Mar)"
-          value={`$${dashboardStats.revenue.amount.toLocaleString()}`}
-          change={`↑ ${dashboardStats.revenue.change}%`}
+          title={`Revenue (${revenuePeriod})`}
+          value={`$${revenueAmount.toLocaleString()}`}
+          change={`↑ ${revenueChange}%`}
           changeColor="text-emerald-600"
           icon={DollarSign}
           iconColor="bg-emerald-500"
@@ -135,10 +187,11 @@ export function OwnerPortal({ onLogout }) {
           Recent Reports
         </h3>
         <div className="space-y-3">
-          {REPORTS.slice(0, 5).map(report => (
+          {recentReports.slice(0, 5).map(report => (
             <div
-              key={report.id}
+              key={report.report_id || report.id}
               className="flex items-center justify-between p-4 bg-slate-50 rounded-xl hover:bg-slate-100 transition-colors cursor-pointer"
+              data-testid={`report-item-${report.report_id || report.id}`}
             >
               <div>
                 <p className="font-bold text-slate-900">{report.title}</p>
@@ -290,17 +343,22 @@ export function OwnerPortal({ onLogout }) {
             {/* User Profile */}
             <div className="p-8 border-t border-white/5 bg-black/20">
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-11 h-11 rounded-full bg-teal-500 border-2 border-teal-400 flex items-center justify-center text-[#0A1628] font-black text-xs">
-                  DH
+                <div className="w-11 h-11 rounded-full bg-teal-500 border-2 border-teal-400 flex items-center justify-center text-[#0A1628] font-black text-xs overflow-hidden">
+                  {user?.picture ? (
+                    <img src={user.picture} alt={user.name} className="w-full h-full object-cover" />
+                  ) : (
+                    user?.name?.split(' ').map(n => n[0]).join('').slice(0, 2) || 'U'
+                  )}
                 </div>
                 <div className="truncate text-white">
-                  <p className="text-xs font-black truncate tracking-tight">Daniel Hayward</p>
-                  <p className="text-teal-500 text-[9px] font-bold uppercase">Business Owner</p>
+                  <p className="text-xs font-black truncate tracking-tight">{user?.name || 'User'}</p>
+                  <p className="text-teal-500 text-[9px] font-bold uppercase">{user?.role || 'Staff'}</p>
                 </div>
               </div>
               <button
-                onClick={onLogout}
+                onClick={handleLogout}
                 className="w-full py-3.5 rounded-2xl bg-red-500/10 text-red-400 text-[10px] font-black tracking-widest hover:bg-red-500 hover:text-white transition-all uppercase"
+                data-testid="logout-btn"
               >
                 LOGOUT
               </button>
