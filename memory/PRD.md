@@ -1,10 +1,10 @@
 # ATC Master Platform - Product Requirements Document
 
 ## Project Overview
-**Product Name:** ATC Master OS v19.0 - Achieve Together Care Enterprise Platform  
+**Product Name:** ATC Master OS v20.0 - Achieve Together Care Enterprise Platform  
 **Domain:** achievetogethercare.com.au  
 **Type:** Full-stack NDIS Care Management Platform  
-**Tech Stack:** React + FastAPI + MongoDB
+**Tech Stack:** React + FastAPI + MongoDB + jsPDF
 
 ## Original Problem Statement
 Build an enterprise-grade management platform for Achieve Together Care (NDIS provider) with the same structure as the reference design but better - featuring Business Command Center, Smart Outreach CRM, Clinical Management, and Data Synchronization modules.
@@ -14,105 +14,123 @@ Build an enterprise-grade management platform for Achieve Together Care (NDIS pr
 2. **Support Coordinators** - Recipients of outreach emails
 3. **Care Workers** - Future users for clinical incident logging
 
-## Core Design Requirements (Updated April 2, 2026)
-- **Brand Identity:**
-  - Colors: Dark Navy (#0A1628), Teal (#14B8B6), Lavender (#B794F4)
-  - Typography: Manrope (headings), IBM Plex Sans (body/tables)
-  - Style: Swiss/High-Contrast Enterprise Healthcare
-
-- **Design Patterns (NEW):**
-  - Control Room Grid layout for dashboards
-  - Max 8px border-radius (no bubble/ultra-rounded cards)
-  - Dense but structured spacing (p-4 to p-6)
-  - 1px solid borders with subtle #E2E8F0 color
-  - Data tables with atc-table class for consistent styling
-  - Badge system: atc-badge-success, atc-badge-warning, atc-badge-danger, atc-badge-info
-  - Button system: atc-btn-primary, atc-btn-secondary, atc-btn-danger, atc-btn-accent
-
-- **Layout:**
-  - 256px dark navy sidebar
-  - Dense 14px height header
-  - Full-height layout with scrolling content area
-
 ## What's Been Implemented
 
 ### Phase 1-4: Full MVP Complete ✅
-(Previous phases completed - see CHANGELOG.md)
+- Authentication (JWT + Google OAuth)
+- Dashboard with KPI cards
+- Staff Management with compliance tracking
+- Client Management with goals
+- Smart Outreach CRM with AI email generation
+- Payroll (SCHADS rates)
+- Invoice Management
+- Report Management
+- Compliance Tracking
+- Calendar scheduling
+- Automation tools
 
 ### Phase 5: UI/UX Enterprise Redesign ✅
+**Date:** April 2, 2026
+- Swiss/High-Contrast enterprise aesthetic
+- New design system with CSS classes
+- Control Room Grid layout
+
+### Phase 6: PDF, Website & G-Drive Integration ✅
 **Date:** April 2, 2026  
 **Status:** COMPLETED
 
-**Design System Updates:**
-1. ✅ New CSS design system in `/app/frontend/src/index.css`
-   - CSS variables for ATC brand colors
-   - Manrope font for headings, IBM Plex Sans for body
-   - Enterprise table styling (.atc-table)
-   - Badge system (.atc-badge-*)
-   - Button system (.atc-btn-*)
-   - Input/Label styling (.atc-input, .atc-label)
-   - Alert banners (.atc-alert-*)
-   - Card styling (.atc-card)
+**1. PDF Generation (jsPDF + jspdf-autotable)**
+- ✅ Invoice PDF download (`/app/frontend/src/services/pdfService.js`)
+- ✅ Capability Brochure generation (3-page professional PDF)
+- ✅ Download and Preview functionality
 
-2. ✅ Dashboard Redesign (`OwnerPortal.jsx`)
-   - KPI cards with Control Room Grid layout
-   - Quick Actions panel
-   - Recent Reports table
-   - Staff Overview section
-   - Active Participants section
-   - Compact header with search bar
-   - Online status indicator
+**2. Website Integration**
+- ✅ Website Integration page (`/app/frontend/src/components/website/WebsiteIntegration.jsx`)
+- ✅ Stats display (Pages Live, Draft, Visitors, Referrals)
+- ✅ Website preview with link to achievetogethercare.com.au
+- ✅ Marketing Materials section (Brochure download)
+- ✅ WordPress admin link
 
-3. ✅ Staff Management Redesign (`StaffManagement.jsx`)
-   - Stats row: Total Staff, Valid Docs, Expiring, Expired
-   - Data table with compliance status badges
-   - Search and filter functionality
-   - Staff detail modal with compliance documents
-
-4. ✅ Client Management Redesign (`ClientManagement.jsx`)
-   - Stats row: Total Clients, Weekly Hours, Plan/Self Managed
-   - Data table with NDIS info and funding badges
-   - Search functionality
-   - Client detail modal with goals, likes, triggers
-
-5. ✅ Smart Outreach CRM Redesign (`SmartOutreach.jsx`)
-   - Stats row: Total Leads, Ready to Send, Contacted, Converted
-   - Bulk actions bar (Bulk SMS, Send Batch)
-   - Leads table with role and status badges
-   - AI email generation modal with dark header
+**3. Google Drive Sync (DEMO MODE)**
+- ✅ G-Drive Sync page (`/app/frontend/src/components/gdrive/GDriveSyncComponent.jsx`)
+- ✅ 6 folder structure display
+- ✅ Recent files list
+- ✅ Force Sync button
+- ✅ Wednesday Master Sync schedule
+- ⚠️ **MOCKED API** - Requires Google OAuth credentials for real sync
 
 ## Test Results (April 2, 2026)
 
-### Iteration 4 - UI/UX Enterprise Redesign
-- Backend: 100% (34/34 tests passed)
-- Frontend: 100% (25 UI flows verified)
-- Design System: All CSS classes rendering correctly
-- No issues found
+### Iteration 5 - PDF, Website & G-Drive
+- Backend: 100% (39/39 tests passed)
+- Frontend: 100% (22 UI flows verified)
+- Bugs Fixed: 2 (G-Drive prefix, jspdf-autotable import)
+- All new features working correctly
+
+## Architecture
+
+```
+/app
+ ├── frontend/src/
+ │    ├── components/
+ │    │    ├── portals/ (OwnerPortal.jsx - 13 nav items)
+ │    │    ├── website/ (WebsiteIntegration.jsx) [NEW]
+ │    │    ├── gdrive/ (GDriveSyncComponent.jsx) [NEW]
+ │    │    ├── crm/ (SmartOutreach.jsx)
+ │    │    ├── staff/ (StaffManagement.jsx)
+ │    │    ├── clients/ (ClientManagement.jsx)
+ │    │    ├── invoices/ (InvoiceManagement.jsx + PDF)
+ │    │    ├── payroll/ (PayrollManagement.jsx)
+ │    │    └── compliance/ (ComplianceManagement.jsx)
+ │    ├── services/
+ │    │    ├── api.js
+ │    │    └── pdfService.js [NEW]
+ │    └── App.js
+ └── backend/
+      ├── routers/
+      │    ├── auth.py, dashboard.py, staff.py, clients.py
+      │    ├── ai.py, payroll.py, compliance.py
+      │    └── gdrive.py [NEW - MOCKED]
+      └── server.py
+```
 
 ## Prioritized Backlog
 
 ### P0 - COMPLETED ✅
 - ✅ Full-stack MVP with all core features
 - ✅ UI/UX Enterprise Redesign
+- ✅ PDF Generation
+- ✅ Website Integration
+- ✅ Google Drive Sync (Demo Mode)
 
 ### P1 - Email Sending Integration (BLOCKED)
 - [ ] Resend API integration for actual email delivery
 - **BLOCKED:** User doesn't have a RESEND_API_KEY
 
-### P2 - WordPress & Drive Integration
-- [ ] WordPress integration for achievetogethercare.com.au
-- [ ] Google Drive sync backend connection
+### P1 - Real Google Drive Integration
+- [ ] Google OAuth configuration
+- [ ] Real file sync with Drive API
+- **REQUIRES:** Google Cloud Console project + OAuth credentials
 
-### P3 - Advanced Features
-- [ ] PDF generation for invoices/brochures
-- [ ] Incident logging and tracking
+### P3 - Future Features
+- [ ] Service Flyer PDF
+- [ ] Digital Business Card vCard
 - [ ] Analytics dashboard with charts
 - [ ] Multi-user support (team members)
+- [ ] Incident logging and tracking
 
-## API Contracts
-(See previous PRD for full API documentation)
+## API Endpoints
+
+### New Endpoints (Phase 6)
+- `GET /api/gdrive/status` - Get Drive status and folders (MOCKED)
+- `POST /api/gdrive/sync` - Trigger sync (MOCKED)
+- `POST /api/gdrive/connect` - Initiate OAuth (returns setup instructions)
+
+## Credentials
+See `/app/memory/test_credentials.md`
 
 ## Notes
-- All 4 testing iterations passed with 100% success rate
-- New enterprise design follows Swiss/High-Contrast aesthetic
-- Email sending requires user to provide Resend API key
+- All 5 testing iterations passed with 100% success rate
+- PDF generation is client-side (no server dependency)
+- Google Drive is in demo mode until OAuth credentials are provided
+- Email sending requires Resend API key from user
