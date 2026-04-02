@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { 
   LayoutDashboard, Users, FileText, DollarSign, Calendar,
   Settings, HelpCircle, LogOut, Menu, X, Bell, Search,
-  TrendingUp, AlertCircle, CheckCircle, Clock
+  TrendingUp, AlertCircle, CheckCircle, Clock, Rocket
 } from 'lucide-react';
 import { STAFF, CLIENTS, INVOICES, REPORTS, dashboardStats } from '../../lib/data';
 import { getComplianceScore, getExpiredDocuments, getExpiringDocuments } from '../../lib/compliance';
 import useIsMobile from '../../hooks/useIsMobile';
 import ComprehensiveCalendar from '../calendar/ComprehensiveCalendar';
 import QuickShiftReport from '../automation/QuickShiftReport';
+import SmartOutreach from '../crm/SmartOutreach';
 
 export function OwnerPortal({ onLogout }) {
   const [activeSection, setActiveSection] = useState('dashboard');
@@ -159,6 +160,8 @@ export function OwnerPortal({ onLogout }) {
     switch (activeSection) {
       case 'dashboard':
         return renderDashboard();
+      case 'crm':
+        return <SmartOutreach />;
       case 'calendar':
         return (
           <ComprehensiveCalendar
