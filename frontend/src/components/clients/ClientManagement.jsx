@@ -2,9 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Users, Plus, Edit2, Trash2, X, Phone, Mail, MapPin, 
-  Loader2, Target, Heart, AlertTriangle, Calendar, FileText, Search, ChevronRight
+  Loader2, Target, Heart, AlertTriangle, Calendar, FileText, Search, ChevronRight, Eye
 } from 'lucide-react';
 import { clientsAPI } from '../../services/api';
+import ClientProfile from './ClientProfile';
 
 export function ClientManagement() {
   const [clients, setClients] = useState([]);
@@ -12,6 +13,7 @@ export function ClientManagement() {
   const [showModal, setShowModal] = useState(false);
   const [editingClient, setEditingClient] = useState(null);
   const [selectedClient, setSelectedClient] = useState(null);
+  const [viewingClient, setViewingClient] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [formData, setFormData] = useState({
     name: '',
@@ -264,6 +266,14 @@ export function ClientManagement() {
                 </td>
                 <td className="text-right">
                   <div className="flex items-center justify-end gap-1">
+                    <button
+                      onClick={(e) => { e.stopPropagation(); setViewingClient(client); }}
+                      className="p-1.5 hover:bg-teal-50 rounded-md transition-colors"
+                      data-testid={`view-client-${client.client_id}`}
+                      title="View Profile"
+                    >
+                      <Eye size={14} className="text-teal-500" />
+                    </button>
                     <button
                       onClick={(e) => { e.stopPropagation(); openEditModal(client); }}
                       className="p-1.5 hover:bg-slate-100 rounded-md transition-colors"
@@ -592,6 +602,18 @@ export function ClientManagement() {
             </form>
           </div>
         </div>
+      )}
+
+      {/* Client Profile Modal */}
+      {viewingClient && (
+        <ClientProfile 
+          client={viewingClient} 
+          onClose={() => setViewingClient(null)}
+          onEdit={(client) => {
+            setViewingClient(null);
+            handleEdit(client);
+          }}
+        />
       )}
     </div>
   );

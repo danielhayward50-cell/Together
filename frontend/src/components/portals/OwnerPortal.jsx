@@ -4,7 +4,7 @@ import {
   LayoutDashboard, Users, FileText, DollarSign, Calendar,
   Settings, HelpCircle, LogOut, Menu, X, Bell, Search,
   TrendingUp, AlertCircle, CheckCircle, Clock, Rocket,
-  ChevronRight, Filter, Plus, Mail, MessageSquare, Globe, HardDrive, Inbox
+  ChevronRight, Filter, Plus, Mail, MessageSquare, Globe, HardDrive, Inbox, FileSignature
 } from 'lucide-react';
 import { STAFF, CLIENTS, INVOICES, REPORTS, dashboardStats } from '../../lib/data';
 import { getComplianceScore, getExpiredDocuments, getExpiringDocuments } from '../../lib/compliance';
@@ -21,6 +21,7 @@ import ComplianceManagement from '../compliance/ComplianceManagement';
 import WebsiteIntegration from '../website/WebsiteIntegration';
 import GDriveSyncComponent from '../gdrive/GDriveSyncComponent';
 import InquiriesBookingsManagement from '../inquiries/InquiriesBookingsManagement';
+import NDISFormFiller from '../forms/NDISFormFiller';
 import { useAuth } from '../../context/AuthContext';
 import { dashboardAPI, staffAPI, clientsAPI, invoicesAPI, reportsAPI } from '../../services/api';
 
@@ -98,6 +99,7 @@ export function OwnerPortal() {
     { id: 'calendar', label: 'Calendar', icon: Calendar },
     { id: 'staff', label: 'Staff', icon: Users },
     { id: 'clients', label: 'Clients', icon: Users },
+    { id: 'forms', label: 'NDIS Forms', icon: FileSignature },
     { id: 'payroll', label: 'Payroll', icon: DollarSign },
     { id: 'invoices', label: 'Invoices', icon: FileText },
     { id: 'reports', label: 'Reports', icon: FileText },
@@ -394,6 +396,8 @@ export function OwnerPortal() {
         return <GDriveSyncComponent />;
       case 'inquiries':
         return <InquiriesBookingsManagement />;
+      case 'forms':
+        return <NDISFormFiller clients={apiClients} staff={apiStaff} />;
       case 'settings':
         return <PlaceholderSection title="Settings" description="System configuration" />;
       default:
