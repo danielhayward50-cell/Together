@@ -42,65 +42,100 @@ Build an enterprise-grade management platform for Achieve Together Care (NDIS pr
 
 **Components Created:**
 1. ✅ Layout System
-   - `MainLayout.jsx` - Master layout wrapper
-   - `Sidebar.jsx` - Dark gradient sidebar with navigation
-   - `Header.jsx` - Dynamic page header with action buttons
+   - `OwnerPortal.jsx` - Main dashboard with sidebar navigation
+   - Dark gradient sidebar with navigation
+   - Dynamic page header with action buttons
 
 2. ✅ Dashboard Components
-   - `StatCard.jsx` - Reusable metric cards with variants
-   - `CommandCenter.jsx` - Business dashboard with stats + calendar (with day headers)
-   - `ClinicalHub.jsx` - Incident management with active monitoring
-   - `Finance.jsx` - SCHADS rates, payroll, and net disbursement
-   - `GDriveSync.jsx` - G-Drive folder structure visualization
+   - `StatCard` - Reusable metric cards with variants
+   - Dashboard with stats + recent reports
+   - Quick Actions (Create Invoice, Process Payroll, Quick Report)
 
-3. ✅ Modals
-   - `EmailPreviewModal.jsx` - Professional email preview (deprecated in v17.2)
-   - `ClinicalReportModal.jsx` - Clinical data entry with AI generation
+3. ✅ CRM Components
+   - `SmartOutreach.jsx` - CRM with leads table, email modal, batch send
 
-4. ✅ Mock Data
-   - Dashboard stats (revenue, roster success 100%, burn rate, alerts)
-   - Finance data (SCHADS $38.08/hr, Core Support $70.23/hr, Net: $1,934.46)
-   - G-Drive folder structure (Participants, Finance)
-   - Incident tracking (Shaun Case: Behavior of Concern)
+4. ✅ Calendar & Automation
+   - `ComprehensiveCalendar.jsx` - Full calendar with shift management
+   - `QuickShiftReport.jsx` - AI-assisted shift reporting
 
-**Features Working:**
-- ✅ Navigation between 4 modules (Command, Clinical, Finance, Sync)
-- ✅ Command Center dashboard with 4 stat cards + calendar with day headers
-- ✅ Clinical Hub with incident management and sync status
-- ✅ Finance/Payroll module with SCHADS rates and tax calculations
-- ✅ G-Drive Sync with folder visualization and force sweep
-- ✅ Clinical report modal with date, KM, billing window, narrative
-- ✅ Responsive hover states and animations
-- ✅ Glass-morphism effects throughout
-- ✅ Professional typography (Inter + Outfit)
-
-### Phase 2: Enhanced Features ✅
+### Phase 2: Backend API Development ✅
 **Date:** April 2, 2026  
 **Status:** Completed
 
-**New Modules:**
-- ✅ Finance/Payroll with SCHADS rates, tax deductions, net disbursement
-- ✅ Clinical Hub with incident management
-- ✅ G-Drive Sync with folder structure
-- ✅ Clinical Report Modal with AI generation placeholder
+**Backend Components:**
+1. ✅ Authentication System
+   - JWT email/password authentication with httpOnly cookies
+   - Google OAuth integration (Emergent Auth)
+   - Admin seeding on startup
+   - Brute force protection
+   - Password reset flow
 
-**Removed:**
-- Smart Outreach CRM (replaced with Clinical Hub focus)
+2. ✅ MongoDB Models & Collections
+   - users (with user_id, email, password_hash, role)
+   - staff (with compliance documents)
+   - clients (with NDIS info, goals, preferences)
+   - shifts (with activities, engagement, support, goals)
+   - invoices (with line items, NDIS codes)
+   - reports (with sections)
+   - leads (CRM contacts)
+
+3. ✅ REST API Endpoints
+   - `/api/auth/*` - Authentication (login, register, logout, me, refresh, forgot-password, reset-password, google/session)
+   - `/api/dashboard/*` - Stats, KPIs, calendar data
+   - `/api/staff/*` - Staff CRUD with compliance
+   - `/api/clients/*` - Client CRUD
+   - `/api/shifts/*` - Shift CRUD with completion
+   - `/api/invoices/*` - Invoice CRUD with generation from shifts
+   - `/api/reports/*` - Report CRUD
+   - `/api/leads/*` - CRM lead CRUD with batch send
+
+4. ✅ Seed Data
+   - Admin user (Daniel Hayward)
+   - 1 Staff member
+   - 1 Client (Shaun Case)
+   - 5 CRM Leads
+   - 2 Shifts
+   - 1 Invoice
+   - 1 Report
+
+### Phase 3: Frontend-Backend Integration ✅
+**Date:** April 2, 2026  
+**Status:** Completed
+
+**Integration Work:**
+1. ✅ API Service (`/app/frontend/src/services/api.js`)
+   - Axios instance with credentials
+   - All API methods for auth, dashboard, staff, clients, shifts, invoices, reports, leads
+
+2. ✅ Auth Context (`/app/frontend/src/context/AuthContext.jsx`)
+   - Login/Register/Logout methods
+   - Google OAuth support
+   - Protected routes
+
+3. ✅ Login Page (`/app/frontend/src/pages/LoginPage.jsx`)
+   - Email/password form
+   - Google login button
+   - Demo credentials display
+
+4. ✅ Dashboard Updates
+   - Real data from /api/dashboard/stats
+   - User profile from auth context
+
+5. ✅ CRM Updates
+   - Real leads from /api/leads
+   - Batch send functionality
+   - Status updates
+
+### Issues Fixed ✅
+1. ✅ Smart Outreach CRM sidebar navigation - Added 'crm' to navItems array
 
 ## Prioritized Backlog
 
-### P0 - Backend Foundation (Next Phase)
-- [ ] Authentication system for business owner login
-- [ ] MongoDB models for:
-  - Leads/Contacts
-  - Clinical activities
-  - Dashboard metrics
-  - Incidents
-- [ ] REST API endpoints:
-  - GET/POST /api/leads
-  - GET/POST /api/activities
-  - GET /api/dashboard/stats
-  - POST /api/emails/send
+### P0 - Remaining Work
+- [ ] Staff Management page (list, create, edit, delete)
+- [ ] Client Management page (list, create, edit, delete)
+- [ ] Invoices page with NDIS invoice generation
+- [ ] Reports page with shift report viewing
 
 ### P1 - AI Integration
 - [ ] AI-powered email generation for CRM outreach
@@ -109,55 +144,70 @@ Build an enterprise-grade management platform for Achieve Together Care (NDIS pr
 - [ ] Clinical report generation
 
 ### P2 - Advanced Features
-- [ ] PDF generation for capability brochures
+- [ ] PDF generation for capability brochures and invoices
 - [ ] G-Drive sync functionality
 - [ ] Incident logging and tracking
 - [ ] Email scheduling and batch sending
 - [ ] Analytics dashboard
 
-### P3 - Enhancements
+### P3 - WordPress & Enhancements
+- [ ] WordPress integration for achievetogethercare.com.au (separate site with links)
 - [ ] Email tracking (opens, responses)
 - [ ] Calendar event management
 - [ ] Multi-user support (team members)
 - [ ] Mobile responsive optimization
 
-## Next Tasks
-1. **Backend Development** - Build FastAPI endpoints for leads, activities, and dashboard stats
-2. **Database Setup** - Create MongoDB collections and seed initial data
-3. **Frontend-Backend Integration** - Replace mock data with real API calls
-4. **Authentication** - Implement login system for Daniel Hayward
-5. **Testing** - End-to-end testing with testing agent
-
-## API Contracts (To Be Implemented)
+## API Contracts (Implemented)
 
 ### Dashboard Stats
 ```
 GET /api/dashboard/stats
 Response: {
   revenue: { amount, change, period },
-  outreachROI: { percentage, newIntakes },
-  ndisBurnRate: { dailyRate, percentage },
-  complianceAlert: { count, message }
+  clients: { total, active },
+  staff: { total },
+  compliance: { score, expired, expiring },
+  invoices: { pending, total }
 }
+```
+
+### Authentication
+```
+POST /api/auth/login
+Body: { email, password }
+Response: { user: { user_id, email, name, role }, message }
+
+POST /api/auth/register
+Body: { email, password, name, role }
+Response: { user: {...}, message }
+
+GET /api/auth/me
+Response: { user_id, email, name, role, picture }
 ```
 
 ### Leads Management
 ```
 GET /api/leads
-Response: [{ id, name, organization, role, service, email, phone, status, priority }]
+Response: [{ lead_id, name, organization, role, email, phone, status, priority }]
 
 POST /api/leads
-Body: { name, organization, role, service, email, phone }
+Body: { name, organization, role, email, phone }
+Response: { lead_id, ... }
+
+POST /api/leads/{lead_id}/contact
+Response: { lead_id, status: "contacted", last_contacted }
+
+POST /api/leads/batch-send
+Response: { message, leads_contacted: [] }
 ```
 
-### Email Sending
-```
-POST /api/emails/send
-Body: { leadId, subject, body, attachments }
-```
+## Test Results (April 2, 2026)
+- Backend: 100% (18/18 tests passed)
+- Frontend: 100% (all UI flows working)
+- See `/app/test_reports/iteration_1.json` for details
 
 ## Notes
-- Frontend built with Shadcn UI components (not used yet, but available)
-- All mock data centralized in `/app/frontend/src/mock/mockData.js`
-- Design matches $20k+ agency quality with attention to micro-interactions
-- Calendar currently shows static March 2026 grid
+- Frontend built with Shadcn UI components
+- All mock data moved to API - no frontend mocking
+- Design matches $20k+ agency quality with micro-interactions
+- Calendar shows dynamic data from API
