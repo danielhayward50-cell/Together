@@ -7,10 +7,14 @@ import {
 import { STAFF, CLIENTS, INVOICES, REPORTS, dashboardStats } from '../../lib/data';
 import { getComplianceScore, getExpiredDocuments, getExpiringDocuments } from '../../lib/compliance';
 import useIsMobile from '../../hooks/useIsMobile';
+import ComprehensiveCalendar from '../calendar/ComprehensiveCalendar';
+import QuickShiftReport from '../automation/QuickShiftReport';
 
 export function OwnerPortal({ onLogout }) {
   const [activeSection, setActiveSection] = useState('dashboard');
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [selectedShift, setSelectedShift] = useState(null);
+  const [showQuickReport, setShowQuickReport] = useState(false);
   const isMobile = useIsMobile();
 
   // Dashboard stats
@@ -156,7 +160,51 @@ export function OwnerPortal({ onLogout }) {
       case 'dashboard':
         return renderDashboard();
       case 'calendar':
-        return <PlaceholderSection title="Calendar" description="Comprehensive shift scheduling coming here" />;
+        return (
+          <ComprehensiveCalendar
+            onCreateReport={(shift) => {
+              setSelectedShift(shift);
+              setShowQuickReport(true);
+            }}
+            onViewShift={(shift) => {
+              alert(`Viewing shift details for ${shift.participant}\n${shift.date} ${shift.startTime}-${shift.endTime}`);
+            }}
+          />
+        );
+      case 'automation':
+        return showQuickReport ? (
+          <QuickShiftReport
+            prefilledShift={selectedShift}
+            onClose={() => {
+              setShowQuickReport(false);
+              setSelectedShift(null);
+            }}
+          />
+        ) : (
+          <div className="space-y-6">
+            <div className="bg-white rounded-[32px] border border-slate-200 p-16 text-center">
+              <TrendingUp size={48} className="text-purple-500 mx-auto mb-6" />
+              <h3 className="text-2xl font-black text-slate-900 uppercase tracking-tight mb-4">
+                Automation Tools
+              </h3>
+              <p className="text-slate-500 text-lg mb-8">Choose a tool to get started</p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
+                <button
+                  onClick={() => setShowQuickReport(true)}
+                  className="p-6 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-2xl hover:scale-105 transition-transform font-black uppercase"
+                >
+                  Quick Shift Report
+                </button>
+                <button className="p-6 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-2xl hover:scale-105 transition-transform font-black uppercase">
+                  Auto Invoice
+                </button>
+                <button className="p-6 bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-2xl hover:scale-105 transition-transform font-black uppercase">
+                  Auto Payroll
+                </button>
+              </div>
+            </div>
+          </div>
+        );
       case 'staff':
         return <PlaceholderSection title="Staff Management" description="Staff profiles and compliance tracking" />;
       case 'clients':
@@ -169,8 +217,6 @@ export function OwnerPortal({ onLogout }) {
         return <PlaceholderSection title="Reports" description="All shift and incident reports" />;
       case 'compliance':
         return <PlaceholderSection title="Compliance" description="Document tracking and alerts" />;
-      case 'automation':
-        return <PlaceholderSection title="Automation" description="Quick tools and generators" />;
       case 'settings':
         return <PlaceholderSection title="Settings" description="System configuration" />;
       default:
