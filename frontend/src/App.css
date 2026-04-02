@@ -1,0 +1,36 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap');
+
+/* Custom animations */
+@keyframes pulse-emerald {
+    0% {
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+    }
+}
+
+.animate-pulse-emerald {
+    animation: pulse-emerald 2s infinite;
+}
+
+/* Glass-morphism utility class */
+.glass {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Brand font utility */
+.brand {
+    font-family: 'Outfit', sans-serif;
+}
+
+/* Body uses Inter */
+body {
+    font-family: 'Inter', sans-serif;
+}
