@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Mail, Send, X, FileText, Users, Loader2 } from 'lucide-react';
+import { Mail, Send, X, FileText, Users, Loader2, Sparkles } from 'lucide-react';
 import { leadsAPI } from '../../services/api';
+
+const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 export function SmartOutreach() {
   const [selectedLead, setSelectedLead] = useState(null);
@@ -8,6 +10,8 @@ export function SmartOutreach() {
   const [leads, setLeads] = useState([]);
   const [loading, setLoading] = useState(true);
   const [sendingBatch, setSendingBatch] = useState(false);
+  const [generatingEmail, setGeneratingEmail] = useState(false);
+  const [aiEmail, setAiEmail] = useState(null);
 
   // Fetch leads from API
   useEffect(() => {
@@ -29,9 +33,38 @@ export function SmartOutreach() {
     fetchLeads();
   }, []);
 
+  const generateAIEmail = async (lead) => {
+    setGeneratingEmail(true);
+    setAiEmail(null);
+    try {
+      const response = await fetch(`${API_URL}/api/ai/generate-email`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({
+          lead_name: lead.name,
+          organization: lead.organization,
+          role: lead.role,
+          service_type: lead.service
+        })
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        setAiEmail(data);
+      }
+    } catch (error) {
+      console.error('Error generating AI email:', error);
+    } finally {
+      setGeneratingEmail(false);
+    }
+  };
+
   const handleOpenEmail = (lead) => {
     setSelectedLead(lead);
+    setAiEmail(null);
     setShowEmailModal(true);
+    generateAIEmail(lead);
   };
 
   const handleSendEmail = async () => {
@@ -202,11 +235,12 @@ export function SmartOutreach() {
               {/* Header */}
               <div className="flex justify-between items-start pb-12 border-b border-slate-100">
                 <div>
-                  <h2 className="text-3xl font-black text-slate-900 tracking-tighter uppercase italic leading-none">
-                    Drafting Growth Outreach
+                  <h2 className="text-3xl font-black text-slate-900 tracking-tighter uppercase italic leading-none flex items-center gap-3">
+                    <Sparkles className="text-purple-500" size={28} />
+                    AI-Powered Outreach
                   </h2>
                   <p className="text-[11px] text-slate-400 font-black uppercase mt-4 tracking-[0.4em]">
-                    From: daniel@achievetogethercare.com
+                    From: daniel@achievetogethercare.com.au
                   </p>
                 </div>
                 <button
@@ -217,24 +251,46 @@ export function SmartOutreach() {
                 </button>
               </div>
 
+              {/* AI Status */}
+              {generatingEmail && (
+                <div className="flex items-center justify-center gap-4 py-8 bg-purple-50 rounded-[32px]">
+                  <Loader2 className="animate-spin text-purple-500" size={24} />
+                  <span className="text-purple-600 font-bold">Generating personalized email with AI...</span>
+                </div>
+              )}
+
+              {/* Email Subject */}
+              {aiEmail && (
+                <div className="bg-slate-50 rounded-[32px] p-6 border-2 border-slate-100">
+                  <p className="text-xs font-black text-slate-400 uppercase mb-2">Subject</p>
+                  <p className="text-lg font-bold text-slate-900">{aiEmail.subject}</p>
+                </div>
+              )}
+
               {/* Email Body */}
               <div className="space-y-8">
                 <div className="p-12 bg-slate-50 border-4 border-slate-100 rounded-[56px] italic text-slate-600 text-lg leading-relaxed">
-                  <p className="mb-6 italic">
-                    "Hi <span className="font-black text-slate-900 underline decoration-teal-400 underline-offset-8">{selectedLead.name}</span>,"
-                  </p>
-                  <p className="mb-6 italic">
-                    "I'm Daniel from <strong>Achieve Together Care</strong>. I've been following your work with NDIS <span className="font-bold text-teal-600">{selectedLead.role}</span> in Sydney and noticed the great outcomes you're achieving."
-                  </p>
-                  <p className="mb-6 italic">
-                    "We currently have immediate capacity for 1:1 Community Participation and high-intensity core supports. We focus heavily on clinical safety, restrictive practice reduction, and providing goal-based evidence for your reports."
-                  </p>
-                  <p className="mb-6 italic">
-                    "I've attached our 2026 Capability Brochure below. Would love to have a 5-minute chat if you have any participants looking for a reliable boutique provider."
-                  </p>
-                  <p className="mt-8 font-black text-slate-900 tracking-tighter italic">
-                    Daniel Hayward · 0422 492 736
-                  </p>
+                  {aiEmail ? (
+                    <div className="whitespace-pre-wrap">{aiEmail.body}</div>
+                  ) : !generatingEmail ? (
+                    <>
+                      <p className="mb-6 italic">
+                        "Hi <span className="font-black text-slate-900 underline decoration-teal-400 underline-offset-8">{selectedLead.name}</span>,"
+                      </p>
+                      <p className="mb-6 italic">
+                        "I'm Daniel from <strong>Achieve Together Care</strong>. I've been following your work with NDIS <span className="font-bold text-teal-600">{selectedLead.role}</span> in Sydney and noticed the great outcomes you're achieving."
+                      </p>
+                      <p className="mb-6 italic">
+                        "We currently have immediate capacity for 1:1 Community Participation and high-intensity core supports. We focus heavily on clinical safety, restrictive practice reduction, and providing goal-based evidence for your reports."
+                      </p>
+                      <p className="mb-6 italic">
+                        "I've attached our 2026 Capability Brochure below. Would love to have a 5-minute chat if you have any participants looking for a reliable boutique provider."
+                      </p>
+                      <p className="mt-8 font-black text-slate-900 tracking-tighter italic">
+                        Daniel Hayward · 0422 492 736
+                      </p>
+                    </>
+                  ) : null}
                 </div>
 
                 {/* Attachment */}
@@ -262,8 +318,18 @@ export function SmartOutreach() {
                   Discard Draft
                 </button>
                 <button
+                  onClick={() => generateAIEmail(selectedLead)}
+                  disabled={generatingEmail}
+                  className="flex-1 py-8 text-[11px] font-black text-purple-600 uppercase tracking-widest hover:bg-purple-50 rounded-[40px] transition-all border-2 border-purple-200 flex items-center justify-center gap-2 disabled:opacity-50"
+                >
+                  <Sparkles size={16} />
+                  Regenerate
+                </button>
+                <button
                   onClick={handleSendEmail}
-                  className="flex-[2] py-8 text-xs font-black bg-[#0A1628] text-white uppercase rounded-[40px] hover:bg-teal-700 shadow-[0_20px_50px_rgba(10,22,40,0.4)] transition-all tracking-[0.3em] italic"
+                  disabled={generatingEmail}
+                  className="flex-[2] py-8 text-xs font-black bg-[#0A1628] text-white uppercase rounded-[40px] hover:bg-teal-700 shadow-[0_20px_50px_rgba(10,22,40,0.4)] transition-all tracking-[0.3em] italic disabled:opacity-50"
+                  data-testid="send-email-btn"
                 >
                   Deploy Personal Outreach
                 </button>

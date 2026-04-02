@@ -14,7 +14,7 @@ import logging
 from datetime import datetime, timezone
 
 # Import routers
-from routers import auth, dashboard, staff, clients, shifts, invoices, reports, leads
+from routers import auth, dashboard, staff, clients, shifts, invoices, reports, leads, ai, payroll, compliance
 
 # MongoDB connection
 mongo_url = os.environ['MONGO_URL']
@@ -30,6 +30,9 @@ shifts.set_database(db)
 invoices.set_database(db)
 reports.set_database(db)
 leads.set_database(db)
+ai.set_database(db)
+payroll.set_database(db)
+compliance.set_database(db)
 
 # Create the main app
 app = FastAPI(title="ATC Master Platform API", version="1.0.0")
@@ -55,6 +58,9 @@ api_router.include_router(shifts.router)
 api_router.include_router(invoices.router)
 api_router.include_router(reports.router)
 api_router.include_router(leads.router)
+api_router.include_router(ai.router)
+api_router.include_router(payroll.router)
+api_router.include_router(compliance.router)
 
 # Include the main router in the app
 app.include_router(api_router)

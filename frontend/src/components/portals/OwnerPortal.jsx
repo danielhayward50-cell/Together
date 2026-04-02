@@ -15,6 +15,8 @@ import StaffManagement from '../staff/StaffManagement';
 import ClientManagement from '../clients/ClientManagement';
 import InvoiceManagement from '../invoices/InvoiceManagement';
 import ReportManagement from '../reports/ReportManagement';
+import PayrollManagement from '../payroll/PayrollManagement';
+import ComplianceManagement from '../compliance/ComplianceManagement';
 import { useAuth } from '../../context/AuthContext';
 import { dashboardAPI, staffAPI, clientsAPI, invoicesAPI, reportsAPI } from '../../services/api';
 
@@ -270,13 +272,13 @@ export function OwnerPortal() {
       case 'clients':
         return <ClientManagement />;
       case 'payroll':
-        return <PlaceholderSection title="Payroll" description="SCHADS payroll management system" />;
+        return <PayrollManagement />;
       case 'invoices':
         return <InvoiceManagement />;
       case 'reports':
         return <ReportManagement />;
       case 'compliance':
-        return <PlaceholderSection title="Compliance" description="Document tracking and alerts" />;
+        return <ComplianceManagement />;
       case 'settings':
         return <PlaceholderSection title="Settings" description="System configuration" />;
       default:
