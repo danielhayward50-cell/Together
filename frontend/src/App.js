@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import "@/App.css";
 import { AuthProvider, useAuth } from './context/AuthContext';
+import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import AuthCallback from './pages/AuthCallback';
 import OwnerPortal from "./components/portals/OwnerPortal";
@@ -49,8 +50,12 @@ function AppRouter() {
 
   return (
     <Routes>
+      {/* Public Routes */}
+      <Route path="/" element={<HomePage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/auth/callback" element={<AuthCallback />} />
+      
+      {/* Protected Routes */}
       <Route
         path="/dashboard"
         element={
@@ -60,13 +65,15 @@ function AppRouter() {
         }
       />
       <Route
-        path="/"
+        path="/portal"
         element={
           <ProtectedRoute>
             <OwnerPortal />
           </ProtectedRoute>
         }
       />
+      
+      {/* Fallback - redirect unknown routes to home */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

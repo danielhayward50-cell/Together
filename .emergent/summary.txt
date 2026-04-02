@@ -5,61 +5,68 @@ PRODUCT REQUIREMENTS:
 - Build a full-stack application (React frontend, FastAPI backend, MongoDB).
 - Integrate WordPress capabilities for the main website (achievetogethercare.com.au).
 
-**User's preferred language**: English. (INSTRUCT NEXT AGENT: You MUST automatically detect the user's primary language from their messages inside the <trajectory> tag and INSTRUCT next agent to respond in the user's preferred language only. Respond in English.)
+**User's preferred language**: English (INSTRUCT NEXT AGENT: You MUST automatically detect the user's primary language from their messages inside the <trajectory> tag and INSTRUCT next agent to respond in the user's preferred language only. Respond in English.)
 
 **what currently exists?**: 
-A fully functional, tested full-stack application. The mocked data has been successfully replaced with real FastAPI backend models and MongoDB data. Authentication (JWT + Google OAuth), Dashboard, CRM (Smart Outreach), Staff Management, Client Management, Invoices, Reports, Payroll (SCHADS rates), and Compliance Tracking are all wired up and working. AI Email Generation for the CRM is implemented using the Emergent LLM Key. 
+A fully functional, tested full-stack application with a newly implemented Swiss/High-Contrast enterprise-grade UI redesign. The platform features secure authentication, CRM (Smart Outreach), Staff/Client Management, Invoices (with newly added PDF generation), G-Drive Sync (demo mode), and a Website Integration dashboard. The app has passed all backend and frontend tests successfully.
 
 **Last working item**: 
-    - Last item agent was working: Implementing actual email sending capability (via Resend) for the CRM and upgrading the UI/UX based on 22 uploaded reference images to reflect an ultra-impressive ATC format rather than shift care.
+    - Last item agent was working: Building an ultra-impressive public-facing Landing/Home page with Google Maps integration, based on 44 newly uploaded design reference images.
     - Status: IN PROGRESS
     - Agent Testing Done: N
-    - Which testing method agent to use?: testing_agent_v3_fork (Backend API for emails and frontend UI changes)
+    - Which testing method agent to use?: testing_agent_v3_fork (Frontend routing and new UI verification)
     - User Testing Done: N
 
 **All Pending/In progress Issue list**:  
-  Issue 1: UI/UX Redesign based on user artifacts (P0)
+  Issue 1: Public Landing Page & Google Maps Integration (P0)
+  Issue 2: Resend Email Integration for CRM (P1)
   
   Issues Detail:
   - Issue 1: 
-     - Attempted fixes: None yet. The user just uploaded 22 images specifying atc better format not the same but add it ultra impressive to owner.
-     - Next debug checklist: Review the uploaded artifacts (use  if necessary, or interpret from the URLs provided in the last message) to match the exact aesthetic the user wants. Update Shadcn/Tailwind UI components accordingly.
-     - Why fix this issue and what will be achieved with the fix?: Fulfills the core user requirement of making the platform an ultra impressive enterprise application.
+     - Attempted fixes: Agent just started investigating  to plan how to restructure the frontend routing to accommodate a new public landing page at the root .
+     - Next debug checklist: Analyze the 44 uploaded reference images to understand the landing page design. Create a new  with Hero, Services, Interactive Google Map (using the newly provided key), Testimonials, and Contact form. Update  routing so  points to the new Landing Page and the existing login flow moves to .
+     - Why fix this issue and what will be achieved with the fix?: Fulfills the user's explicit request to add a map and a much better home page based on their provided UI ideas.
      - Status: IN PROGRESS
      - Is recurring issue?: N
-     - Should Test frontend/backend/both after fix?: frontend (via testing_agent_v3_fork)
+     - Should Test frontend/backend/both after fix?: frontend
      - Blocked on other issue: None
+  - Issue 2: 
+     - Attempted fixes: Skipped previously because the user stated I dont have a key. 
+     - Next debug checklist: The user just provided a key (), but this is a Google Maps API Key, not a Resend key. Ask the user if they still wish to integrate Resend for actual email sending and if they have generated a Resend key.
+     - Why fix this issue and what will be achieved with the fix?: Enables actual email dispatch from the CRM.
+     - Status: BLOCKED
+     - Is recurring issue?: N
+     - Should Test frontend/backend/both after fix?: both
+     - Blocked on other issue: Needs Resend API Key.
 
-**In progress Task List**:
-  Task 1: Email Sending Integration (Resend)
-  
+**In progress Task List**: 
+  Task 1: Landing Page React Routing Refactor (P0)
+
  Task Detail:
   - Task 1: 
-     - Where to resume: The agent just fetched the  for Resend. You need to gather the  from the user and implement the  (or similar) endpoint to actually dispatch the AI-generated CRM emails.
-     - What will be achieved with this?: Completes the CRM Smart Outreach loop allowing owners to send emails directly from the platform.
-     - Status: IN PROGRESS
-     - Should Test frontend/backend/both after fix?: both
-     - Blocked on something: Needs the  from the user. YOU MUST ASK THE USER FOR THIS KEY before implementation.
+     - Where to resume: Review  and  to shift the authentication wall from the root directory to a dedicated  route, freeing up  for the new landing page.
+     - What will be achieved with this?: Proper architecture for a public-facing SaaS landing page vs internal authenticated portals.
+     - Status: NOT STARTED
+     - Should Test frontend/backend/both after fix?: frontend
+     - Blocked on something: None
 
 **Upcoming and Future Tasks**
     Upcoming Tasks:
-    - P1: Complete WordPress Integration or embed approach for  as requested by the user.
-    - P1: Integrate Google Drive sync backend logic (The  page exists but needs backend connection).
+    - P1: Connect Google Drive sync to real OAuth (currently running in demo mode with mocked folders).
     
     Future Tasks:
     - P2: Polish Clinical OS and complete any remaining Quick Shift Reporting features (AI-assisted workflows).
     - P2: Multi-turn conversation sessions (ensure chat history is stored in DB if an AI chat interface is built).
 
 **Completed work in this session**
-- FastAPI Backend Setup & MongoDB Wiring (DONE)
-- Authentication (JWT & Google OAuth) (, ) (DONE)
-- CRM Smart Outreach fixed and connected to API () (DONE)
-- Management Pages (Staff, Clients, Invoices, Reports) (, etc.) (DONE)
-- Payroll & Compliance features (, ) (DONE)
-- AI Email Generation ( using Emergent LLM) (DONE)
+- UI/UX Enterprise Redesign implemented across OwnerPortal, StaffManagement, SmartOutreach, and ClientManagement (DONE)
+- PDF Generation for Invoices utilizing  and  (DONE)
+- Website Integration dashboard component (DONE)
+- G-Drive Sync mock backend and frontend views (DONE)
+-  iteration 4 and 5 passed completely without regressions (DONE)
 
 **Earlier issues found/mentioned but not fixed**
-None. All 3 iterations of the  passed with 100% success rates for both backend and frontend.
+None.
 
 **Known issue recurrence from previous fork**
   - Issue recurrence in previous fork: None
@@ -72,85 +79,87 @@ None. All 3 iterations of the  passed with 100% success rates for both backend a
  │    ├── components/
  │    │    ├── portals/ (OwnerPortal.jsx)
  │    │    ├── crm/ (SmartOutreach.jsx)
- │    │    ├── staff/ (StaffManagement.jsx)
- │    │    ├── clients/ (ClientManagement.jsx)
- │    │    ├── payroll/ (PayrollManagement.jsx)
- │    │    └── compliance/ (ComplianceManagement.jsx)
- │    ├── context/ (AuthContext.jsx)
- │    ├── services/ (api.js)
- │    ├── pages/ (LoginPage.jsx, AuthCallback.jsx)
+ │    │    ├── invoices/ (InvoiceManagement.jsx)
+ │    │    ├── website/ (WebsiteIntegration.jsx)
+ │    │    └── gdrive/ (GDriveSyncComponent.jsx)
+ │    ├── services/ (api.js, pdfService.js)
+ │    ├── pages/ (LoginPage.jsx, HomePage.jsx [TO BE CREATED])
  │    └── App.js
  └── backend/
-      ├── models.py (Pydantic schemas)
-      ├── routers/ (auth.py, dashboard.py, staff.py, clients.py, ai.py, payroll.py, etc.)
+      ├── routers/ (auth.py, dashboard.py, ai.py, gdrive.py, etc.)
       └── server.py
 
 **Key Technical Concepts**
-React, Tailwind CSS, Shadcn UI (Custom implementation), FastAPI, MongoDB, JWT/OAuth Authentication, Emergent LLM Integrations (GPT-4o).
+React, Tailwind CSS, Shadcn UI, FastAPI, MongoDB, Emergent LLM Integrations (GPT-4o), jsPDF (PDF generation), Google Maps API.
 
 **key DB schema**
-  - Schemas are defined in . Includes , , , , , , , . 
+  - table_name: , , , , , , , 
 
 **changes in tech stack**
-  - Installed  on the frontend for navigation.
-  - Installed  on the backend for AI interactions.
+  - Added  and  for frontend PDF generation capabilities.
 
 **All files of reference** 
-1.  (Handles AI email generation)
-2.  (CRM UI that needs the final Send action)
-3.  (Contains admin login credentials)
-4.  (Updated feature list and backlog)
+1.  (Needs to be relocated in routing)
+2.  (Needs routing update for Landing page)
+3.  (Recently added)
+4.  (Recently added)
+5.  (Test accounts)
+6. 
 
 **Areas that need refactoring**:
-The mock data file  can be systematically removed if all components have successfully transitioned to .
+Routing architecture in  to correctly handle public routes () vs private authenticated routes (, etc.) since the new home page needs to be accessible without logging in.
 
 **key api endpoints**
-- , 
+-  (New mock endpoint)
 - 
-- 
-- , , , , , 
 
 **Critical Info for New Agent**
-- The user just uploaded **22 images** outlining exactly how the UI should look (atc better format not the same but add it ultra impressive to owner). The UI is critical to this user. Analyze the artifacts or apply high-end enterprise design systems (glass-morphism, custom spacing, modern tables) to the frontend components.
-- The  was just run for **Resend** (email integration). The playbook demands a user-provided . You **MUST** use  to retrieve this key from the user before writing the email implementation code. Do not hallucinate or mock the key.
-- For testing, use the credentials located in . 
+- **IMPORTANT KEY USAGE:** The user provided the key . This is a **Google Maps API Key**. Use this directly in your frontend implementation for the Google Maps component on the new home page. Do not ask for it again.
+- The user uploaded **44 new images** for the Landing Page. Use the  on a few representative images from the list to grasp the specific layout and section requirements before implementing the .
+- When implementing the Landing page, remember to update the React Router in  to handle public vs private routing gracefully.
 
 **documents and test reports created in this job**
   - /app/memory/PRD.md
   - /app/memory/test_credentials.md
-  - /app/test_reports/iteration_1.json
-  - /app/test_reports/iteration_2.json
-  - /app/test_reports/iteration_3.json
+  - /app/test_reports/iteration_4.json
+  - /app/test_reports/iteration_5.json
 
 **Last 10 User Messages and any pending HUMAN messages** 
-1. *User*: Proceed - *Completed*
-2. *User*: Add these but atc format not shift care change for better but good idea for owner and staff - *Completed*
-3. *User*: Proceed - *Completed*
-4. *User*: Yes i would like this also add these but atc better format not the same but add it ultra impressive to owner (Uploaded 22 artifact images) - **PENDING / IN PROGRESS**
+1. *Agent*: Completed testing for UI upgrade. (Finished task)
+2. *User*: Proceed
+3. *Agent*: Asked what to build next (PDFs, WordPress Integration, G-Drive Sync).
+4. *User*: All
+5. *Agent*: Implemented all three, passed testing. (Finished task)
+6. *User*: AIzaSyDh9Ys_BRfddAEEL7AWB9dF-g-RLGeHRF8 (Provided Google Maps API Key)
+7. *Agent*: Triggered ask_human for clarity.
+8. *User*: Yes add map add a better home page this is idea but make it a lot better (Uploaded 44 UI reference images). - **PENDING / IN PROGRESS**
 
 **Project Health Check:**
-- Frontend: Healthy (Migrated to real API data)
-- Backend: Healthy (18+ endpoints tested and passing)
+- Frontend: Healthy 
+- Backend: Healthy 
+- Mocked: G-Drive Sync is currently a mocked endpoint until real Google Cloud OAuth is set up.
 
 **3rd Party Integrations** 
   •	Emergent LLM Key (GPT-4o) — uses Emergent LLM Key (for AI Email Generation)
   •	Google OAuth (Login) — requires User-provided key (Implemented)
-  •	Resend (Email Sending) — requires User API Key (Pending implementation)
+  •	Google Maps — requires User API Key (Key provided by user in the last message)
+  •	Resend (Email) — requires User API Key (Blocked/Skipped)
 
 **Testing status**
-  - Testing agent used after significant changes: YES (Iterations 1, 2, and 3 were flawless).
+  - Testing agent used after significant changes: YES (Iterations 4 & 5 passed flawlessly).
   - Troubleshoot agent used after agent stuck in loop: NO
-  - Test files created: [/app/test_reports/iteration_1.json, /app/test_reports/iteration_2.json, /app/test_reports/iteration_3.json]
+  - Test files created: [/app/test_reports/iteration_4.json, /app/test_reports/iteration_5.json]
   - Known regressions: None
 
 **Credentials to test flow:**
-Check  (e.g., admin@achievetogethercare.com.au).
+Admin:  / Password: 
 
 **What agent forgot to execute**
-The agent fetched the Resend playbook but hasn't paused to ask the user for the . You must initiate this request via  before building the actual email sending endpoint.
+The agent realized the user wanted a new landing page and started looking at , but forgot to actually scaffold the  component and update the router in . Ensure you implement the new Landing page layout incorporating the Google Maps key provided.
 
 **Debugging checklist for current issue**
-    Issue: Implement Resend Email Sending & UI Upgrades
-    Frontend files to check:  (Add actual Send API call)
-    Backend files to check:  (Add Resend logic here or in a new  router)
-    Dependencies: User must provide  via .</analysis>
+    Issue: Implement Public Landing Page with Google Maps Integration
+    Frontend files to check: 
+    -  (Refactor React Router to include public  route and shift protected routes)
+    -  (Create new page based on user's 44 uploaded images, integrating the provided  Google Maps key).
+    -  (Ensure it functions correctly at its new  route).</analysis>
