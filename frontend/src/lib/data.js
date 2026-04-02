@@ -258,10 +258,11 @@ export const CLIENTS = [
     ndisNumber: "431005774",
     phone: "0412 345 678",
     email: "shaun.case@email.com",
-    address: "123 Main St, Nowra NSW 2541",
+    address: "123 Main Street, Nowra NSW 2541",
     emergencyContact: "Mary Case (Mother)",
     emergencyPhone: "0423 456 789",
-    dob: "1995-03-15",
+    dob: "1982-10-12",
+    age: 43,
     goals: [
       "Improve daily living skills and independence",
       "Develop social connections in community",
@@ -276,6 +277,18 @@ export const CLIENTS = [
     planEndDate: "2026-06-30",
     weeklyHours: 15,
     supportWorkers: ["Daniel Hayward"],
+    likes: [
+      "Shopping at local supermarket",
+      "Watching movies and TV shows",
+      "Listening to music (especially 80s rock)",
+      "Going to cafes for coffee",
+      "Walking in parks"
+    ],
+    triggers: [
+      "Unexpected changes to schedule",
+      "Loud environments or noise",
+      "Being told 'no' directly"
+    ]
   },
 ];
 
