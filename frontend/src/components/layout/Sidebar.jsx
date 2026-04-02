@@ -7,9 +7,9 @@ const Sidebar = () => {
 
   const navItems = [
     { id: 'owner', path: '/', label: 'Business Command', icon: '📈', section: 'Management' },
-    { id: 'crm', path: '/crm', label: 'Smart Outreach', icon: '🚀', section: 'Management', badge: 5 },
-    { id: 'clinical', path: '/clinical', label: 'Incidents Hub', icon: '🩹', section: 'Clinical' },
-    { id: 'sync', path: '/sync', label: 'G-Drive Sync', icon: '🔄', section: 'Clinical' }
+    { id: 'clinical', path: '/clinical', label: 'Clinical Hub', icon: '🩺', section: 'Management' },
+    { id: 'finance', path: '/finance', label: 'Payroll & Billing', icon: '💰', section: 'Operations' },
+    { id: 'sync', path: '/sync', label: 'Data Hub Sync', icon: '🔄', section: 'Operations' }
   ];
 
   const isActive = (path) => location.pathname === path;
@@ -39,7 +39,7 @@ const Sidebar = () => {
 
       {/* Navigation */}
       <nav className="flex-1 p-6 space-y-2 overflow-y-auto">
-        {['Management', 'Clinical'].map((section) => (
+        {['Management', 'Operations'].map((section) => (
           <div key={section}>
             <p className="text-[10px] font-black text-white/20 uppercase tracking-widest ml-4 mb-2 mt-6 first:mt-0">
               {section}
@@ -57,7 +57,7 @@ const Sidebar = () => {
                   }`}
                 >
                   <span className="text-xl">{item.icon}</span>
-                  <span className="tracking-tight uppercase italic">{item.label}</span>
+                  <span className="tracking-tight uppercase">{item.label}</span>
                   {item.badge && (
                     <span className="absolute right-4 top-1/2 -translate-y-1/2 bg-red-500 text-white text-[9px] px-2 py-0.5 rounded-full font-black">
                       {item.badge}
@@ -84,7 +84,7 @@ const Sidebar = () => {
           onClick={handleLogout}
           className="w-full py-3.5 rounded-2xl bg-red-500/10 text-red-400 text-[10px] font-black tracking-widest hover:bg-red-500 hover:text-white transition-all uppercase"
         >
-          FORCE LOGOUT
+          TERMINATE SESSION
         </button>
       </div>
     </aside>

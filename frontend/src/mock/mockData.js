@@ -106,3 +106,61 @@ export const userProfile = {
   email: "daniel@achievetogethercare.com",
   role: "System Owner"
 };
+
+export const financeData = {
+  schadsBase: {
+    rate: 38.08,
+    level: "L3.1",
+    tax: 520.93,
+    taxRate: 19
+  },
+  coreSupport: {
+    rate: 70.23,
+    description: "Core Support Loading",
+    validated: "2025-26 Price Guide"
+  },
+  netDisbursement: 1934.46,
+  payroll: [
+    {
+      id: 1,
+      name: "Daniel Hayward",
+      hours: 72.0,
+      grossPay: 2741.76,
+      status: "ready"
+    }
+  ]
+};
+
+export const gDriveFolders = [
+  {
+    id: 1,
+    name: "01 – Participants",
+    icon: "📂",
+    color: "teal",
+    subfolders: [
+      "Shaun Case > Clinical Reports",
+      "Lisa Chen > Plan Documents"
+    ]
+  },
+  {
+    id: 2,
+    name: "02 – Finance",
+    icon: "💳",
+    color: "blue",
+    subfolders: [
+      "ATO Tax Records > 2026",
+      "Plan Manager Invoices > Drafts"
+    ]
+  }
+];
+
+export const incidents = [
+  {
+    id: 1,
+    participant: "Shaun Case",
+    type: "Behavior of Concern",
+    status: "open",
+    reportedDate: "Mar 09",
+    severity: "high"
+  }
+];

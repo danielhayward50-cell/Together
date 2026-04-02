@@ -48,29 +48,44 @@ Build an enterprise-grade management platform for Achieve Together Care (NDIS pr
 
 2. ✅ Dashboard Components
    - `StatCard.jsx` - Reusable metric cards with variants
-   - `CommandCenter.jsx` - Business dashboard with stats + calendar
-   - `SmartOutreach.jsx` - CRM leads table and hero banner
-   - `IncidentsHub.jsx` - Placeholder for clinical incidents
-   - `GDriveSync.jsx` - Placeholder for data sync
+   - `CommandCenter.jsx` - Business dashboard with stats + calendar (with day headers)
+   - `ClinicalHub.jsx` - Incident management with active monitoring
+   - `Finance.jsx` - SCHADS rates, payroll, and net disbursement
+   - `GDriveSync.jsx` - G-Drive folder structure visualization
 
 3. ✅ Modals
-   - `EmailPreviewModal.jsx` - Professional email preview with attachment display
+   - `EmailPreviewModal.jsx` - Professional email preview (deprecated in v17.2)
+   - `ClinicalReportModal.jsx` - Clinical data entry with AI generation
 
 4. ✅ Mock Data
-   - Dashboard stats (revenue, ROI, burn rate, alerts)
-   - 5 CRM leads with full contact info
-   - Email template system
-   - User profile data
+   - Dashboard stats (revenue, roster success 100%, burn rate, alerts)
+   - Finance data (SCHADS $38.08/hr, Core Support $70.23/hr, Net: $1,934.46)
+   - G-Drive folder structure (Participants, Finance)
+   - Incident tracking (Shaun Case: Behavior of Concern)
 
 **Features Working:**
-- ✅ Navigation between 4 modules
-- ✅ Command Center dashboard with 4 stat cards
-- ✅ Calendar grid with active date (March 9, 2026)
-- ✅ Smart Outreach CRM with 5 leads
-- ✅ Email preview modal with personalization
+- ✅ Navigation between 4 modules (Command, Clinical, Finance, Sync)
+- ✅ Command Center dashboard with 4 stat cards + calendar with day headers
+- ✅ Clinical Hub with incident management and sync status
+- ✅ Finance/Payroll module with SCHADS rates and tax calculations
+- ✅ G-Drive Sync with folder visualization and force sweep
+- ✅ Clinical report modal with date, KM, billing window, narrative
 - ✅ Responsive hover states and animations
-- ✅ Glass-morphism effects
+- ✅ Glass-morphism effects throughout
 - ✅ Professional typography (Inter + Outfit)
+
+### Phase 2: Enhanced Features ✅
+**Date:** April 2, 2026  
+**Status:** Completed
+
+**New Modules:**
+- ✅ Finance/Payroll with SCHADS rates, tax deductions, net disbursement
+- ✅ Clinical Hub with incident management
+- ✅ G-Drive Sync with folder structure
+- ✅ Clinical Report Modal with AI generation placeholder
+
+**Removed:**
+- Smart Outreach CRM (replaced with Clinical Hub focus)
 
 ## Prioritized Backlog
 
