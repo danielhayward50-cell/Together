@@ -14,7 +14,7 @@ import logging
 from datetime import datetime, timezone
 
 # Import routers
-from routers import auth, dashboard, staff, clients, shifts, invoices, reports, leads, ai, payroll, compliance
+from routers import auth, dashboard, staff, clients, shifts, invoices, reports, leads, ai, payroll, compliance, gdrive
 
 # MongoDB connection
 mongo_url = os.environ['MONGO_URL']
@@ -61,6 +61,7 @@ api_router.include_router(leads.router)
 api_router.include_router(ai.router)
 api_router.include_router(payroll.router)
 api_router.include_router(compliance.router)
+api_router.include_router(gdrive.router)
 
 # Include the main router in the app
 app.include_router(api_router)

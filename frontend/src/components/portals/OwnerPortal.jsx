@@ -4,7 +4,7 @@ import {
   LayoutDashboard, Users, FileText, DollarSign, Calendar,
   Settings, HelpCircle, LogOut, Menu, X, Bell, Search,
   TrendingUp, AlertCircle, CheckCircle, Clock, Rocket,
-  ChevronRight, Filter, Plus, Mail, MessageSquare
+  ChevronRight, Filter, Plus, Mail, MessageSquare, Globe, HardDrive
 } from 'lucide-react';
 import { STAFF, CLIENTS, INVOICES, REPORTS, dashboardStats } from '../../lib/data';
 import { getComplianceScore, getExpiredDocuments, getExpiringDocuments } from '../../lib/compliance';
@@ -18,6 +18,8 @@ import InvoiceManagement from '../invoices/InvoiceManagement';
 import ReportManagement from '../reports/ReportManagement';
 import PayrollManagement from '../payroll/PayrollManagement';
 import ComplianceManagement from '../compliance/ComplianceManagement';
+import WebsiteIntegration from '../website/WebsiteIntegration';
+import GDriveSyncComponent from '../gdrive/GDriveSyncComponent';
 import { useAuth } from '../../context/AuthContext';
 import { dashboardAPI, staffAPI, clientsAPI, invoicesAPI, reportsAPI } from '../../services/api';
 
@@ -99,6 +101,8 @@ export function OwnerPortal() {
     { id: 'reports', label: 'Reports', icon: FileText },
     { id: 'compliance', label: 'Compliance', icon: AlertCircle },
     { id: 'automation', label: 'Automation', icon: TrendingUp },
+    { id: 'website', label: 'Website', icon: Globe },
+    { id: 'gdrive', label: 'G-Drive Sync', icon: HardDrive },
     { id: 'settings', label: 'Settings', icon: Settings },
   ];
 
@@ -382,6 +386,10 @@ export function OwnerPortal() {
         return <ReportManagement />;
       case 'compliance':
         return <ComplianceManagement />;
+      case 'website':
+        return <WebsiteIntegration />;
+      case 'gdrive':
+        return <GDriveSyncComponent />;
       case 'settings':
         return <PlaceholderSection title="Settings" description="System configuration" />;
       default:

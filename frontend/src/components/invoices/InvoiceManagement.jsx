@@ -2,9 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import { 
   FileText, Plus, Eye, Send, Check, Clock, AlertCircle,
-  Loader2, DollarSign, Calendar, User, X, Download
+  Loader2, DollarSign, Calendar, User, X, Download, Search
 } from 'lucide-react';
 import { invoicesAPI, clientsAPI } from '../../services/api';
+import { generateInvoicePDF, downloadPDF, openPDFInNewTab } from '../../services/pdfService';
 
 export function InvoiceManagement() {
   const [invoices, setInvoices] = useState([]);
@@ -56,6 +57,16 @@ export function InvoiceManagement() {
       console.error('Error marking invoice as paid:', error);
       alert('Error updating invoice');
     }
+  };
+
+  const handleDownloadPDF = (invoice) => {
+    const doc = generateInvoicePDF(invoice);
+    downloadPDF(doc, `${invoice.invoice_no}_${invoice.client?.replace(/\s+/g, '_')}.pdf`);
+  };
+
+  const handlePreviewPDF = (invoice) => {
+    const doc = generateInvoicePDF(invoice);
+    openPDFInNewTab(doc);
   };
 
   const handleGenerateInvoice = async (e) => {
@@ -194,6 +205,14 @@ export function InvoiceManagement() {
                     >
                       <Eye size={16} className="text-slate-400" />
                     </button>
+                    <button
+                      onClick={() => handleDownloadPDF(invoice)}
+                      className="p-2 hover:bg-teal-50 rounded-lg transition-colors"
+                      title="Download PDF"
+                      data-testid={`download-invoice-${invoice.invoice_id}`}
+                    >
+                      <Download size={16} className="text-teal-500" />
+                    </button>
                     {invoice.status === 'draft' && (
                       <button
                         onClick={() => handleSendInvoice(invoice.invoice_id)}
@@ -319,10 +338,12 @@ export function InvoiceManagement() {
               {/* Actions */}
               <div className="flex gap-4">
                 <button
-                  onClick={() => setSelectedInvoice(null)}
-                  className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 py-3 rounded-2xl font-bold transition-colors"
+                  onClick={() => handleDownloadPDF(selectedInvoice)}
+                  className="flex-1 bg-teal-500 hover:bg-teal-600 text-white py-3 rounded-2xl font-bold transition-colors flex items-center justify-center gap-2"
+                  data-testid="download-invoice-pdf"
                 >
-                  Close
+                  <Download size={18} />
+                  Download PDF
                 </button>
                 {selectedInvoice.status === 'draft' && (
                   <button
