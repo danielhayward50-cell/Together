@@ -4,6 +4,7 @@ import "@/App.css";
 import { AuthProvider, useAuth } from './context/AuthContext';
 import LoginPage from './pages/LoginPage';
 import AuthCallback from './pages/AuthCallback';
+import LandingPage from './pages/LandingPage';
 import OwnerPortal from "./components/portals/OwnerPortal";
 import { Loader2 } from 'lucide-react';
 
@@ -49,18 +50,11 @@ function AppRouter() {
 
   return (
     <Routes>
+      <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/auth/callback" element={<AuthCallback />} />
       <Route
         path="/dashboard"
-        element={
-          <ProtectedRoute>
-            <OwnerPortal />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/"
         element={
           <ProtectedRoute>
             <OwnerPortal />
