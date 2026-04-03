@@ -1,236 +1,210 @@
 # ATC Master Platform - Product Requirements Document
 
-## Project Overview
-**Product Name:** ATC Master OS v20.0 - Achieve Together Care Enterprise Platform  
-**Domain:** achievetogethercare.com.au  
-**Type:** Full-stack NDIS Care Management Platform  
-**Tech Stack:** React + FastAPI + MongoDB + jsPDF + Google Maps API
-
 ## Original Problem Statement
-Build an enterprise-grade management platform for Achieve Together Care (NDIS provider) with the same structure as the reference design but better - featuring Business Command Center, Smart Outreach CRM, Clinical Management, and Data Synchronization modules.
+Build the "ATC Master Platform" (Achieve Together Care), an ultra-impressive, enterprise-grade NDIS management console for managing Owner, Staff, and Client portals.
 
-## User Personas
-1. **Business Owner (Daniel Leigh Hayward)** - Primary user managing operations, outreach, revenue, and compliance
-2. **Support Coordinators** - Recipients of outreach emails
-3. **Care Workers** - Future users for clinical incident logging
+### User's Explicit Requirements:
+- "Make it look absolutely stunning like a brochure"
+- "Better ATC branding"
+- "Files organized by days/weeks/months, appointments, invoices, shift reports, contacts, BSB reports, NDIS forms"
+- "Better PDF viewer"
+- "Better uploads/downloads"
+- "AI built-in"
+- "Better layout everything"
 
-## What's Been Implemented
+---
 
-### Phase 1-4: Full MVP Complete ✅
-- Authentication (JWT + Google OAuth)
-- Dashboard with KPI cards
-- Staff Management with compliance tracking
-- Client Management with goals
-- Smart Outreach CRM with AI email generation
-- Payroll (SCHADS rates)
-- Invoice Management
-- Report Management
-- Compliance Tracking
-- Calendar scheduling
-- Automation tools
+## Core Modules
 
-### Phase 5: UI/UX Enterprise Redesign ✅
-**Date:** April 2, 2026
-- Swiss/High-Contrast enterprise aesthetic
-- New design system with CSS classes
-- Control Room Grid layout
+### 1. Authentication & Authorization
+- JWT-based authentication with role-based access (Owner, Staff, Client)
+- Google OAuth integration via Emergent
+- Demo credentials for testing
 
-### Phase 6: PDF, Website & G-Drive Integration ✅
-**Date:** April 2, 2026  
-**Status:** COMPLETED
+### 2. Owner Portal Dashboard
+- Premium KPI cards (Revenue, Active Clients, Compliance, Pending Invoices)
+- Quick action buttons
+- Recent reports table
+- Staff overview
+- Active participants
 
-**1. PDF Generation (jsPDF + jspdf-autotable)**
-- ✅ Invoice PDF download (`/app/frontend/src/services/pdfService.js`)
-- ✅ Capability Brochure generation (3-page professional PDF)
-- ✅ Download and Preview functionality
+### 3. Document Hub (NEW - April 2026)
+- **8 Organized Folders**:
+  - Appointments (scheduled sessions & meetings)
+  - Invoices & Remittances (financial documents)
+  - Shift Reports (daily support documentation)
+  - Contacts & BSB (contact info & banking details)
+  - NDIS Forms (service agreements & plans)
+  - Compliance Docs (certifications & audits)
+  - Recent Files (recently accessed)
+  - Bin (deleted files)
+- Grid/List view toggle
+- File preview modal
+- Upload functionality
+- Search & filter
+- Sync status indicator
+- Storage stats bar
 
-**2. Website Integration**
-- ✅ Website Integration page (`/app/frontend/src/components/website/WebsiteIntegration.jsx`)
-- ✅ Stats display (Pages Live, Draft, Visitors, Referrals)
-- ✅ Website preview with link to achievetogethercare.com.au
-- ✅ Marketing Materials section (Brochure download)
-- ✅ WordPress admin link
+### 4. NDIS Form Filler
+- **6 Form Templates**:
+  - Service Agreement
+  - Progress Notes
+  - Incident Report
+  - Support Plan
+  - Risk Assessment
+  - Shift Report
+- Quick auto-fill from client/worker selection
+- PDF generation with brochure-quality styling
+- Form preview panel
 
-**3. Google Drive Sync (DEMO MODE)**
-- ✅ G-Drive Sync page (`/app/frontend/src/components/gdrive/GDriveSyncComponent.jsx`)
-- ✅ 6 folder structure display
-- ✅ Recent files list
-- ✅ Force Sync button
-- ✅ Wednesday Master Sync schedule
-- ⚠️ **MOCKED API** - Requires Google OAuth credentials for real sync
+### 5. Smart Outreach (CRM)
+- Lead management
+- Pipeline stages
+- AI-powered email composer
+- Contact history
 
-### Phase 7: Public Landing Page with Google Maps ✅
-**Date:** April 2, 2026  
-**Status:** COMPLETED
+### 6. Staff Management
+- Staff profiles
+- Compliance tracking
+- Scheduling
 
-**1. Public Landing Page (`/app/frontend/src/pages/HomePage.jsx`)**
-- ✅ Hero Section: "More Than Just Care" headline with gradient text
-- ✅ NDIS Registered Provider badge
-- ✅ Trust indicators (NDIS Registered, Fully Insured, Experienced Team, 24/7 Support)
-- ✅ Two CTAs: "Book Free Consultation" modal and "Explore Services"
-- ✅ Smooth scroll navigation
+### 7. Client Management
+- Client profiles with full details
+- NDIS numbers
+- Service history
+- Emergency contacts
 
-**2. Services Section**
-- ✅ 4 service cards with gradient icons
-- ✅ Capacity Building, Daily Living Support, Community Access, Plan Management
-- ✅ Hover animations and Learn More links
+### 8. Payroll & Invoicing
+- SCHADS rates integration
+- Invoice generation with premium PDF styling
+- Payment tracking
 
-**3. How It Works Section**
-- ✅ 4-step process with numbered cards
-- ✅ Get in Touch → Initial Consultation → Personalized Plan → Begin Your Journey
+### 9. Calendar & Scheduling
+- Full calendar view
+- Shift management
+- Appointment booking
 
-**4. Testimonials Section**
-- ✅ 3 testimonial cards with gradient backgrounds
-- ✅ 5-star ratings with user names and roles
+### 10. Public Landing Page
+- Hero section with booking CTA
+- Services showcase
+- Testimonials
+- Contact form
+- Google Maps integration (generic Sydney location)
 
-**5. Contact Section with Google Maps**
-- ✅ Contact form with backend storage (MongoDB)
-- ✅ Form submission with success message
-- ✅ Google Maps embed with dark theme styling
-- ✅ Sydney location with custom marker
-- ✅ Contact info cards (Phone, Email, Address)
+---
 
-**6. Booking System**
-- ✅ "Book Free Consultation" modal with full form
-- ✅ Service type selection, date/time picker
-- ✅ Backend API for storing bookings (`/api/contact/booking`)
-- ✅ Booking stats endpoint (`/api/contact/stats`)
+## What's Been Implemented (April 2026)
 
-**7. Backend Contact/Booking APIs (`/app/backend/routers/contact.py`)**
-- ✅ POST `/api/contact/inquiry` - Store contact inquiries
-- ✅ GET `/api/contact/inquiries` - List all inquiries
-- ✅ PATCH `/api/contact/inquiry/{id}/status` - Update inquiry status
-- ✅ POST `/api/contact/booking` - Store consultation bookings
-- ✅ GET `/api/contact/bookings` - List all bookings
-- ✅ PATCH `/api/contact/booking/{id}/status` - Update booking status
-- ✅ GET `/api/contact/stats` - Get inquiry/booking statistics
+### Completed Features:
+1. ✅ Authentication system with JWT + Google OAuth
+2. ✅ Owner Portal with full navigation
+3. ✅ Dashboard with premium KPI cards
+4. ✅ Document Hub with 8 organized folders
+5. ✅ NDIS Form Filler with 6 templates + PDF generation
+6. ✅ Smart Outreach CRM
+7. ✅ Staff & Client Management
+8. ✅ Invoice Management with brochure-quality PDFs
+9. ✅ Calendar & Scheduling
+10. ✅ Public Landing Page with contact/booking forms
+11. ✅ Inquiries & Bookings Management
+12. ✅ WordPress "Owner Login" redirect integration
+13. ✅ **Premium UI/UX Overhaul** (April 3, 2026):
+    - Deep forest green sidebar (#1B3B36)
+    - Terracotta (#C16E5A) and teal (#14B8B6) accents
+    - Rounded 2xl cards (16px radius)
+    - Gradient icons on folders and form types
+    - Outfit + Manrope typography
+    - Glass-morphism header
+    - Premium animations
+    - Brochure-quality PDF styling
 
-**8. Routing Refactor**
-- ✅ `/` → Public landing page (no auth required)
-- ✅ `/login` → Login page
-- ✅ `/dashboard` → Protected Owner Portal
+### Testing Status:
+- **Iteration 7**: 100% frontend tests passing
+- All navigation flows verified
+- PDF generation confirmed working
+- Document Hub folder navigation tested
 
-## Test Results (April 2, 2026)
+---
 
-### Iteration 6 - Public Landing Page with Google Maps
-- Frontend: 100% (40+ UI flows verified)
-- All landing page sections working correctly
-- Google Maps API integrated with dark theme
-- Login flow redirects to dashboard successfully
+## Pending/Backlog
 
-### Phase 8: WordPress Integration & Inquiries Management ✅
-**Date:** April 2, 2026  
-**Status:** COMPLETED
+### P0 (Critical):
+- None currently
 
-**1. WordPress Owner Login Integration**
-- ✅ Header template edited (post ID: 11)
-- ✅ Owner Login button now links to Emergent app
-- ✅ Link: `https://achieve-care-portal.preview.emergentagent.com/login`
-- ✅ Verified: Clicking "Owner Login" on WordPress redirects to ATC Platform
+### P1 (High Priority):
+- Real Google Drive OAuth integration (currently demo mode)
+- WordPress homepage professional images update (Elementor automation blocked)
+- Resend email integration for CRM (needs API key)
 
-**2. Inquiries & Bookings Management (`/app/frontend/src/components/inquiries/InquiriesBookingsManagement.jsx`)**
-- ✅ Stats cards: Total Inquiries, New Inquiries, Total Bookings, Confirmed
-- ✅ Tabs: Inquiries and Bookings with count badges
-- ✅ List view with status badges (NEW, PENDING, CONTACTED, CONFIRMED, etc.)
-- ✅ Detail panel with contact info, message/notes, appointment details
-- ✅ Status update buttons: Contacted, Converted, Archive / Confirm, Complete, Cancel
-- ✅ Search and filter functionality
-- ✅ Refresh button
-- ✅ Added to Owner Portal sidebar as "Inquiries" nav item
+### P2 (Medium Priority):
+- Clinical OS polish
+- Quick Shift Reporting AI enhancements
+- Multi-turn conversation sessions with DB storage
 
-## Architecture
+### P3 (Low Priority):
+- Advanced analytics dashboard
+- Mobile app considerations
+- Export/import functionality
 
-```
-/app
- ├── frontend/src/
- │    ├── pages/
- │    │    ├── HomePage.jsx [Public Landing Page]
- │    │    ├── LoginPage.jsx
- │    │    └── AuthCallback.jsx
- │    ├── components/
- │    │    ├── portals/ (OwnerPortal.jsx - 14 nav items)
- │    │    ├── inquiries/ (InquiriesBookingsManagement.jsx) [NEW]
- │    │    ├── website/ (WebsiteIntegration.jsx)
- │    │    ├── gdrive/ (GDriveSyncComponent.jsx)
- │    │    ├── crm/ (SmartOutreach.jsx)
- │    │    ├── staff/ (StaffManagement.jsx)
- │    │    ├── clients/ (ClientManagement.jsx)
- │    │    ├── invoices/ (InvoiceManagement.jsx + PDF)
- │    │    ├── payroll/ (PayrollManagement.jsx)
- │    │    └── compliance/ (ComplianceManagement.jsx)
- │    ├── services/
- │    │    ├── api.js
- │    │    └── pdfService.js
- │    └── App.js (Updated routing)
- └── backend/
-      ├── routers/
-      │    ├── auth.py, dashboard.py, staff.py, clients.py
-      │    ├── ai.py, payroll.py, compliance.py
-      │    ├── gdrive.py [MOCKED]
-      │    └── contact.py [NEW - Inquiries & Bookings]
-      └── server.py
-```
+---
 
-## Prioritized Backlog
+## Technical Architecture
 
-### P0 - COMPLETED ✅
-- ✅ Full-stack MVP with all core features
-- ✅ UI/UX Enterprise Redesign
-- ✅ PDF Generation
-- ✅ Website Integration
-- ✅ Google Drive Sync (Demo Mode)
-- ✅ Public Landing Page with Google Maps
-- ✅ Contact Form Backend & Booking System
-- ✅ WordPress Owner Login Integration
-- ✅ Inquiries & Bookings Management in Owner Portal
+### Frontend (React + Tailwind)
+- `/app/frontend/src/components/portals/OwnerPortal.jsx` - Main dashboard
+- `/app/frontend/src/components/documents/DocumentHub.jsx` - File management
+- `/app/frontend/src/components/forms/NDISFormFiller.jsx` - Form generator
+- `/app/frontend/src/pages/HomePage.jsx` - Public landing page
+- `/app/frontend/src/services/pdfService.js` - PDF generation
 
-### P1 - WordPress Homepage Upgrades (IN PROGRESS)
-- [ ] Update service card images (young active people, no wheelchairs/elderly)
-- [ ] Add professional service descriptions
-- [ ] Add ATC staff photos in branded shirts (need uploads from Daniel)
+### Backend (FastAPI + MongoDB)
+- `/app/backend/server.py` - Main server
+- `/app/backend/routers/` - API routes
+- `/app/backend/models/` - Data models
 
-### P1 - Email Sending Integration (BLOCKED)
-- [ ] Resend API integration for actual email delivery
-- **BLOCKED:** User doesn't have a RESEND_API_KEY
+### Database Schema (MongoDB):
+- Users, Staff, Clients, Leads, Shifts, Invoices, Reports, ContactInquiries, Bookings
 
-### P1 - Real Google Drive Integration
-- [ ] Google OAuth configuration
-- [ ] Real file sync with Drive API
-- **REQUIRES:** Google Cloud Console project + OAuth credentials
+---
 
-### P2 - Future Features
-- [ ] Service Flyer PDF
-- [ ] Digital Business Card vCard
-- [ ] Analytics dashboard with charts
-- [ ] Multi-user support (team members)
-- [ ] Incident logging and tracking
-- [ ] Clinical OS enhancements
-- [ ] Quick Shift Reporting AI workflows
+## Design System
 
-## API Endpoints
+### Colors:
+- Primary: #1B3B36 (Deep Forest Green)
+- Primary Light: #2A5A53
+- Accent: #C16E5A (Terracotta)
+- Teal: #14B8B6
+- Background: #FDFCFB (Warm White)
+- Surface: #FFFFFF
+- Secondary: #F4F5F4 (Sand)
+- Text: #1B3B36
+- Muted: #6B7270
+- Border: #E8EAE9
 
-### Contact & Booking Endpoints (Phase 7) - NEW
-- `POST /api/contact/inquiry` - Submit contact inquiry (stored in MongoDB)
-- `GET /api/contact/inquiries` - List all inquiries (admin)
-- `PATCH /api/contact/inquiry/{id}/status` - Update inquiry status
-- `POST /api/contact/booking` - Submit consultation booking
-- `GET /api/contact/bookings` - List all bookings (admin)
-- `PATCH /api/contact/booking/{id}/status` - Update booking status
-- `GET /api/contact/stats` - Get inquiry/booking statistics
+### Typography:
+- Headings: Outfit (font-heading)
+- Body: Manrope
 
-### Google Drive Endpoints (Phase 6)
-- `GET /api/gdrive/status` - Get Drive status and folders (MOCKED)
-- `POST /api/gdrive/sync` - Trigger sync (MOCKED)
-- `POST /api/gdrive/connect` - Initiate OAuth (returns setup instructions)
+### Components:
+- Cards: rounded-2xl (16px radius)
+- Buttons: rounded-full (pill-shaped)
+- Inputs: rounded-xl (12px radius)
+
+---
+
+## Third-Party Integrations
+
+| Service | Status | Notes |
+|---------|--------|-------|
+| Emergent LLM (GPT-4o) | ✅ Active | Using Emergent Universal Key |
+| Google OAuth | ✅ Active | Emergent-managed |
+| Google Maps | ✅ Active | User API key provided |
+| G-Drive Sync | ⚠️ Demo Mode | Needs OAuth credentials |
+| Resend Email | ❌ Blocked | Needs API key |
+| WordPress | ✅ Integrated | Owner login redirect working |
+
+---
 
 ## Credentials
-See `/app/memory/test_credentials.md`
 
-## Notes
-- All 6 testing iterations passed with 100% success rate
-- PDF generation is client-side (no server dependency)
-- Google Drive is in demo mode until OAuth credentials are provided
-- Email sending requires Resend API key from user
-- Google Maps API Key configured in frontend/.env
-- Contact form and booking system now fully functional with MongoDB storage
-- New MongoDB collections: `contact_inquiries`, `consultation_bookings`
+See `/app/memory/test_credentials.md` for test accounts.

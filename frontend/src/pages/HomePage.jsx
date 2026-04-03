@@ -223,31 +223,31 @@ export function HomePage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-900 text-white overflow-x-hidden">
+    <div className="min-h-screen bg-[#1B3B36] text-white overflow-x-hidden">
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-900/80 backdrop-blur-xl border-b border-white/5">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#1B3B36]/80 backdrop-blur-xl border-b border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
             <div className="flex items-center gap-3" data-testid="nav-logo">
-              <div className="w-12 h-12 bg-gradient-to-br from-teal-400 to-cyan-500 rounded-2xl flex items-center justify-center shadow-lg shadow-teal-500/30">
+              <div className="w-12 h-12 bg-gradient-to-br from-[#14B8B6] to-[#0D9488] rounded-2xl flex items-center justify-center shadow-lg shadow-teal-500/30">
                 <Heart className="w-6 h-6 text-white" fill="white" />
               </div>
               <div>
                 <span className="text-lg font-black text-white tracking-tight">Achieve Together Care</span>
-                <p className="text-[10px] font-bold text-teal-400 uppercase tracking-widest">NDIS Registered Provider</p>
+                <p className="text-[10px] font-bold text-[#14B8B6] uppercase tracking-widest">NDIS Registered Provider</p>
               </div>
             </div>
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-8">
-              <button onClick={() => scrollToSection('services')} className="text-sm font-bold text-slate-400 hover:text-white transition-colors" data-testid="nav-services">Services</button>
-              <button onClick={() => scrollToSection('how-it-works')} className="text-sm font-bold text-slate-400 hover:text-white transition-colors" data-testid="nav-how-it-works">How It Works</button>
-              <button onClick={() => scrollToSection('testimonials')} className="text-sm font-bold text-slate-400 hover:text-white transition-colors" data-testid="nav-testimonials">Testimonials</button>
-              <button onClick={() => scrollToSection('contact')} className="text-sm font-bold text-slate-400 hover:text-white transition-colors" data-testid="nav-contact">Contact</button>
+              <button onClick={() => scrollToSection('services')} className="text-sm font-bold text-white/60 hover:text-white transition-colors" data-testid="nav-services">Services</button>
+              <button onClick={() => scrollToSection('how-it-works')} className="text-sm font-bold text-white/60 hover:text-white transition-colors" data-testid="nav-how-it-works">How It Works</button>
+              <button onClick={() => scrollToSection('testimonials')} className="text-sm font-bold text-white/60 hover:text-white transition-colors" data-testid="nav-testimonials">Testimonials</button>
+              <button onClick={() => scrollToSection('contact')} className="text-sm font-bold text-white/60 hover:text-white transition-colors" data-testid="nav-contact">Contact</button>
               <button 
                 onClick={() => navigate('/login')}
-                className="bg-teal-500 hover:bg-teal-400 text-slate-900 font-black text-sm uppercase tracking-wider px-6 py-3 rounded-xl shadow-lg shadow-teal-500/30 transition-all"
+                className="bg-[#C16E5A] hover:bg-[#A85D4A] text-white font-black text-sm uppercase tracking-wider px-6 py-3 rounded-full shadow-lg shadow-[#C16E5A]/30 transition-all"
                 data-testid="nav-owner-login"
               >
                 Owner Login
@@ -267,7 +267,7 @@ export function HomePage() {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden bg-slate-800/95 backdrop-blur-xl border-t border-white/5">
+          <div className="md:hidden bg-[#1B3B36]/95 backdrop-blur-xl border-t border-white/5">
             <div className="px-4 py-6 space-y-4">
               <button onClick={() => scrollToSection('services')} className="block w-full text-left text-base font-bold text-white py-3 px-4 rounded-xl hover:bg-white/5">Services</button>
               <button onClick={() => scrollToSection('how-it-works')} className="block w-full text-left text-base font-bold text-white py-3 px-4 rounded-xl hover:bg-white/5">How It Works</button>
@@ -275,7 +275,7 @@ export function HomePage() {
               <button onClick={() => scrollToSection('contact')} className="block w-full text-left text-base font-bold text-white py-3 px-4 rounded-xl hover:bg-white/5">Contact</button>
               <button 
                 onClick={() => navigate('/login')}
-                className="block w-full bg-teal-500 text-slate-900 font-black text-center uppercase tracking-wider py-4 rounded-xl"
+                className="block w-full bg-[#C16E5A] text-white font-black text-center uppercase tracking-wider py-4 rounded-full"
               >
                 Owner Login
               </button>
@@ -288,30 +288,30 @@ export function HomePage() {
       <section className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden" data-testid="hero-section">
         {/* Background Effects */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-teal-500/10 rounded-full blur-[120px]"></div>
-          <div className="absolute -bottom-40 -left-40 w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-[120px]"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-cyan-500/5 rounded-full blur-[150px]"></div>
+          <div className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-[#14B8B6]/10 rounded-full blur-[120px]"></div>
+          <div className="absolute -bottom-40 -left-40 w-[500px] h-[500px] bg-[#C16E5A]/10 rounded-full blur-[120px]"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#14B8B6]/5 rounded-full blur-[150px]"></div>
         </div>
 
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center max-w-4xl mx-auto">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/20 rounded-full px-4 py-2 mb-8">
-              <Sparkles className="w-4 h-4 text-teal-400" />
-              <span className="text-sm font-bold text-teal-400">NDIS Registered Provider</span>
+            <div className="inline-flex items-center gap-2 bg-[#14B8B6]/10 border border-[#14B8B6]/20 rounded-full px-4 py-2 mb-8">
+              <Sparkles className="w-4 h-4 text-[#14B8B6]" />
+              <span className="text-sm font-bold text-[#14B8B6]">NDIS Registered Provider</span>
             </div>
 
             {/* Main Headline */}
             <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black tracking-tight mb-6" data-testid="hero-headline">
               <span className="text-white">More</span>
               <br />
-              <span className="bg-gradient-to-r from-teal-400 via-cyan-400 to-teal-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#14B8B6] via-[#C16E5A] to-[#14B8B6] bg-clip-text text-transparent">
                 Than Just Care
               </span>
             </h1>
 
             {/* Subheadline */}
-            <p className="text-lg sm:text-xl text-slate-400 mb-10 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-lg sm:text-xl text-white/60 mb-10 max-w-2xl mx-auto leading-relaxed">
               Person-centred support that empowers you to achieve your goals. Professional business management with relationship-centred care and unwavering integrity.
             </p>
 
@@ -319,7 +319,7 @@ export function HomePage() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <button 
                 onClick={() => setShowBookingModal(true)}
-                className="group w-full sm:w-auto bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-400 hover:to-cyan-400 text-slate-900 font-black uppercase tracking-wider px-8 py-4 rounded-2xl shadow-xl shadow-teal-500/30 transition-all flex items-center justify-center gap-3"
+                className="group w-full sm:w-auto bg-gradient-to-r from-[#14B8B6] to-[#0D9488] hover:from-[#0D9488] hover:to-[#14B8B6] text-white font-black uppercase tracking-wider px-8 py-4 rounded-full shadow-xl shadow-teal-500/30 transition-all flex items-center justify-center gap-3"
                 data-testid="hero-cta-primary"
               >
                 <Calendar className="w-5 h-5" />
@@ -327,7 +327,7 @@ export function HomePage() {
               </button>
               <button 
                 onClick={() => scrollToSection('services')}
-                className="w-full sm:w-auto bg-white/5 hover:bg-white/10 border border-white/10 text-white font-black uppercase tracking-wider px-8 py-4 rounded-2xl transition-all flex items-center justify-center gap-3"
+                className="w-full sm:w-auto bg-[#C16E5A] hover:bg-[#A85D4A] text-white font-black uppercase tracking-wider px-8 py-4 rounded-full transition-all flex items-center justify-center gap-3"
                 data-testid="hero-cta-secondary"
               >
                 Explore Services
@@ -335,21 +335,21 @@ export function HomePage() {
             </div>
 
             {/* Trust Indicators */}
-            <div className="mt-16 flex flex-wrap items-center justify-center gap-8 text-slate-500">
+            <div className="mt-16 flex flex-wrap items-center justify-center gap-8 text-white/50">
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-5 h-5 text-teal-400" />
+                <CheckCircle2 className="w-5 h-5 text-[#14B8B6]" />
                 <span className="text-sm font-bold">NDIS Registered</span>
               </div>
               <div className="flex items-center gap-2">
-                <Shield className="w-5 h-5 text-teal-400" />
+                <Shield className="w-5 h-5 text-[#14B8B6]" />
                 <span className="text-sm font-bold">Fully Insured</span>
               </div>
               <div className="flex items-center gap-2">
-                <Users className="w-5 h-5 text-teal-400" />
+                <Users className="w-5 h-5 text-[#14B8B6]" />
                 <span className="text-sm font-bold">Experienced Team</span>
               </div>
               <div className="flex items-center gap-2">
-                <Clock className="w-5 h-5 text-teal-400" />
+                <Clock className="w-5 h-5 text-[#14B8B6]" />
                 <span className="text-sm font-bold">24/7 Support</span>
               </div>
             </div>
@@ -358,15 +358,15 @@ export function HomePage() {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="py-24 px-4 sm:px-6 lg:px-8 relative" data-testid="services-section">
+      <section id="services" className="py-24 px-4 sm:px-6 lg:px-8 relative bg-[#FDFCFB]" data-testid="services-section">
         <div className="max-w-7xl mx-auto">
           {/* Section Header */}
           <div className="text-center mb-16">
-            <span className="text-xs font-black text-teal-400 uppercase tracking-[0.3em] mb-4 block">Our Services</span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-4">
+            <span className="text-xs font-black text-[#C16E5A] uppercase tracking-[0.3em] mb-4 block">Our Services</span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#1B3B36] mb-4">
               Comprehensive NDIS Support
             </h2>
-            <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+            <p className="text-lg text-[#6B7270] max-w-2xl mx-auto">
               Tailored services designed to help you live independently and achieve your goals.
             </p>
           </div>
@@ -376,15 +376,15 @@ export function HomePage() {
             {services.map((service, index) => (
               <div 
                 key={index}
-                className="group bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 hover:bg-white/10 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl"
+                className="group bg-white border border-[#E8EAE9] rounded-3xl p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
                 data-testid={`service-card-${index}`}
               >
                 <div className={`w-14 h-14 bg-gradient-to-br ${service.color} rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform`}>
                   <service.icon className="w-7 h-7 text-white" />
                 </div>
-                <h3 className="text-xl font-black text-white mb-2">{service.title}</h3>
-                <p className="text-slate-400 mb-4">{service.description}</p>
-                <button className="flex items-center gap-2 text-teal-400 font-bold text-sm group-hover:gap-3 transition-all">
+                <h3 className="text-xl font-black text-[#1B3B36] mb-2">{service.title}</h3>
+                <p className="text-[#6B7270] mb-4">{service.description}</p>
+                <button className="flex items-center gap-2 text-[#C16E5A] font-bold text-sm group-hover:gap-3 transition-all">
                   Learn More <ChevronRight className="w-4 h-4" />
                 </button>
               </div>
@@ -394,15 +394,15 @@ export function HomePage() {
       </section>
 
       {/* How It Works Section */}
-      <section id="how-it-works" className="py-24 px-4 sm:px-6 lg:px-8 bg-slate-800/50" data-testid="how-it-works-section">
+      <section id="how-it-works" className="py-24 px-4 sm:px-6 lg:px-8 bg-[#1B3B36]" data-testid="how-it-works-section">
         <div className="max-w-7xl mx-auto">
           {/* Section Header */}
           <div className="text-center mb-16">
-            <span className="text-xs font-black text-teal-400 uppercase tracking-[0.3em] mb-4 block">How It Works</span>
+            <span className="text-xs font-black text-[#14B8B6] uppercase tracking-[0.3em] mb-4 block">How It Works</span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-4">
               Getting Started is Simple
             </h2>
-            <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+            <p className="text-lg text-white/60 max-w-2xl mx-auto">
               From your first call to your first support session — we make the process clear, personal, and stress-free.
             </p>
           </div>
@@ -412,12 +412,12 @@ export function HomePage() {
             {steps.map((step, index) => (
               <div key={index} className="relative" data-testid={`step-${index}`}>
                 <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 h-full">
-                  <span className="text-6xl font-black text-teal-500/20 mb-4 block">{step.number}</span>
+                  <span className="text-6xl font-black text-[#14B8B6]/20 mb-4 block">{step.number}</span>
                   <h3 className="text-xl font-black text-white mb-3">{step.title}</h3>
-                  <p className="text-slate-400">{step.description}</p>
+                  <p className="text-white/60">{step.description}</p>
                 </div>
                 {index < steps.length - 1 && (
-                  <div className="hidden lg:block absolute top-1/2 -right-4 transform -translate-y-1/2 text-teal-500/30">
+                  <div className="hidden lg:block absolute top-1/2 -right-4 transform -translate-y-1/2 text-[#14B8B6]/30">
                     <ArrowRight className="w-8 h-8" />
                   </div>
                 )}
@@ -428,15 +428,15 @@ export function HomePage() {
       </section>
 
       {/* Testimonials Section */}
-      <section id="testimonials" className="py-24 px-4 sm:px-6 lg:px-8" data-testid="testimonials-section">
+      <section id="testimonials" className="py-24 px-4 sm:px-6 lg:px-8 bg-[#FDFCFB]" data-testid="testimonials-section">
         <div className="max-w-7xl mx-auto">
           {/* Section Header */}
           <div className="text-center mb-16">
-            <span className="text-xs font-black text-teal-400 uppercase tracking-[0.3em] mb-4 block">Testimonials</span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-4">
+            <span className="text-xs font-black text-[#C16E5A] uppercase tracking-[0.3em] mb-4 block">Testimonials</span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#1B3B36] mb-4">
               What People Say
             </h2>
-            <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+            <p className="text-lg text-[#6B7270] max-w-2xl mx-auto">
               Real stories from participants, carers, and support coordinators who trust Achieve Together Care.
             </p>
           </div>
@@ -447,9 +447,9 @@ export function HomePage() {
               <div 
                 key={index}
                 className={`rounded-3xl p-8 ${
-                  index === 0 ? 'bg-gradient-to-br from-teal-600 to-cyan-600' :
-                  index === 1 ? 'bg-slate-800 border border-white/10' :
-                  'bg-gradient-to-br from-purple-600 to-pink-600'
+                  index === 0 ? 'bg-gradient-to-br from-[#1B3B36] to-[#2A5A53]' :
+                  index === 1 ? 'bg-white border border-[#E8EAE9]' :
+                  'bg-gradient-to-br from-[#C16E5A] to-[#A85D4A]'
                 }`}
                 data-testid={`testimonial-${index}`}
               >
@@ -461,14 +461,14 @@ export function HomePage() {
                 </div>
                 
                 {/* Quote */}
-                <p className={`text-lg mb-6 leading-relaxed ${index === 1 ? 'text-slate-300' : 'text-white/90'}`}>
+                <p className={`text-lg mb-6 leading-relaxed ${index === 1 ? 'text-[#1B3B36]' : 'text-white/90'}`}>
                   "{testimonial.quote}"
                 </p>
                 
                 {/* Author */}
-                <div className="border-t border-white/20 pt-6">
-                  <p className="font-black text-white">{testimonial.name}</p>
-                  <p className={`text-sm ${index === 1 ? 'text-slate-400' : 'text-white/70'}`}>{testimonial.role}</p>
+                <div className={`border-t ${index === 1 ? 'border-[#E8EAE9]' : 'border-white/20'} pt-6`}>
+                  <p className={`font-black ${index === 1 ? 'text-[#1B3B36]' : 'text-white'}`}>{testimonial.name}</p>
+                  <p className={`text-sm ${index === 1 ? 'text-[#6B7270]' : 'text-white/70'}`}>{testimonial.role}</p>
                 </div>
               </div>
             ))}
@@ -477,15 +477,15 @@ export function HomePage() {
       </section>
 
       {/* Map & Contact Section */}
-      <section id="contact" className="py-24 px-4 sm:px-6 lg:px-8 bg-slate-800/50" data-testid="contact-section">
+      <section id="contact" className="py-24 px-4 sm:px-6 lg:px-8 bg-[#1B3B36]" data-testid="contact-section">
         <div className="max-w-7xl mx-auto">
           {/* Section Header */}
           <div className="text-center mb-16">
-            <span className="text-xs font-black text-teal-400 uppercase tracking-[0.3em] mb-4 block">Contact Us</span>
+            <span className="text-xs font-black text-[#14B8B6] uppercase tracking-[0.3em] mb-4 block">Contact Us</span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-4">
               Get In Touch
             </h2>
-            <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+            <p className="text-lg text-white/60 max-w-2xl mx-auto">
               Ready to start your journey? Contact us today and let's discuss how we can support you.
             </p>
           </div>
@@ -496,10 +496,10 @@ export function HomePage() {
               <h3 className="text-2xl font-black text-white mb-6">Send a Message</h3>
               
               {formSubmitted ? (
-                <div className="bg-teal-500/10 border border-teal-500/20 rounded-2xl p-6 text-center">
-                  <CheckCircle2 className="w-12 h-12 text-teal-400 mx-auto mb-4" />
-                  <p className="text-teal-400 font-bold">Message sent successfully!</p>
-                  <p className="text-slate-400 text-sm mt-2">We'll get back to you within 24 hours.</p>
+                <div className="bg-[#14B8B6]/10 border border-[#14B8B6]/20 rounded-2xl p-6 text-center">
+                  <CheckCircle2 className="w-12 h-12 text-[#14B8B6] mx-auto mb-4" />
+                  <p className="text-[#14B8B6] font-bold">Message sent successfully!</p>
+                  <p className="text-white/60 text-sm mt-2">We'll get back to you within 24 hours.</p>
                 </div>
               ) : (
                 <form onSubmit={handleContactSubmit} className="space-y-5">
@@ -509,13 +509,13 @@ export function HomePage() {
                     </div>
                   )}
                   <div>
-                    <label className="text-xs font-black text-slate-400 uppercase tracking-widest mb-2 block">Your Name</label>
+                    <label className="text-xs font-black text-white/50 uppercase tracking-widest mb-2 block">Your Name</label>
                     <input
                       type="text"
                       value={contactForm.name}
                       onChange={(e) => setContactForm({...contactForm, name: e.target.value})}
                       placeholder="John Smith"
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-white placeholder-slate-500 focus:outline-none focus:border-teal-500/50 focus:ring-2 focus:ring-teal-500/20 transition-all"
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-white placeholder-white/30 focus:outline-none focus:border-[#14B8B6]/50 focus:ring-2 focus:ring-[#14B8B6]/20 transition-all"
                       required
                       disabled={formLoading}
                       data-testid="contact-name"
@@ -750,69 +750,69 @@ export function HomePage() {
                 </div>
 
                 <div>
-                  <label className="text-xs font-black text-slate-400 uppercase tracking-widest mb-2 block">Service Type *</label>
+                  <label className="text-xs font-black text-white/50 uppercase tracking-widest mb-2 block">Service Type *</label>
                   <select
                     value={bookingForm.service_type}
                     onChange={(e) => setBookingForm({...bookingForm, service_type: e.target.value})}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-teal-500/50 focus:ring-2 focus:ring-teal-500/20 transition-all"
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#14B8B6]/50 focus:ring-2 focus:ring-[#14B8B6]/20 transition-all"
                     required
                     disabled={bookingLoading}
                     data-testid="booking-service"
                   >
-                    <option value="" className="bg-slate-800">Select a service...</option>
-                    <option value="capacity_building" className="bg-slate-800">Capacity Building</option>
-                    <option value="daily_living" className="bg-slate-800">Daily Living Support</option>
-                    <option value="community_access" className="bg-slate-800">Community Access</option>
-                    <option value="plan_management" className="bg-slate-800">Plan Management</option>
-                    <option value="general_inquiry" className="bg-slate-800">General Inquiry</option>
+                    <option value="" className="bg-[#1B3B36]">Select a service...</option>
+                    <option value="capacity_building" className="bg-[#1B3B36]">Capacity Building</option>
+                    <option value="daily_living" className="bg-[#1B3B36]">Daily Living Support</option>
+                    <option value="community_access" className="bg-[#1B3B36]">Community Access</option>
+                    <option value="plan_management" className="bg-[#1B3B36]">Plan Management</option>
+                    <option value="general_inquiry" className="bg-[#1B3B36]">General Inquiry</option>
                   </select>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="text-xs font-black text-slate-400 uppercase tracking-widest mb-2 block">Preferred Date *</label>
+                    <label className="text-xs font-black text-white/50 uppercase tracking-widest mb-2 block">Preferred Date *</label>
                     <input
                       type="date"
                       value={bookingForm.preferred_date}
                       onChange={(e) => setBookingForm({...bookingForm, preferred_date: e.target.value})}
                       min={new Date().toISOString().split('T')[0]}
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-teal-500/50 focus:ring-2 focus:ring-teal-500/20 transition-all"
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#14B8B6]/50 focus:ring-2 focus:ring-[#14B8B6]/20 transition-all"
                       required
                       disabled={bookingLoading}
                       data-testid="booking-date"
                     />
                   </div>
                   <div>
-                    <label className="text-xs font-black text-slate-400 uppercase tracking-widest mb-2 block">Preferred Time *</label>
+                    <label className="text-xs font-black text-white/50 uppercase tracking-widest mb-2 block">Preferred Time *</label>
                     <select
                       value={bookingForm.preferred_time}
                       onChange={(e) => setBookingForm({...bookingForm, preferred_time: e.target.value})}
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-teal-500/50 focus:ring-2 focus:ring-teal-500/20 transition-all"
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#14B8B6]/50 focus:ring-2 focus:ring-[#14B8B6]/20 transition-all"
                       required
                       disabled={bookingLoading}
                       data-testid="booking-time"
                     >
-                      <option value="" className="bg-slate-800">Select time...</option>
-                      <option value="09:00" className="bg-slate-800">9:00 AM</option>
-                      <option value="10:00" className="bg-slate-800">10:00 AM</option>
-                      <option value="11:00" className="bg-slate-800">11:00 AM</option>
-                      <option value="12:00" className="bg-slate-800">12:00 PM</option>
-                      <option value="13:00" className="bg-slate-800">1:00 PM</option>
-                      <option value="14:00" className="bg-slate-800">2:00 PM</option>
-                      <option value="15:00" className="bg-slate-800">3:00 PM</option>
-                      <option value="16:00" className="bg-slate-800">4:00 PM</option>
+                      <option value="" className="bg-[#1B3B36]">Select time...</option>
+                      <option value="09:00" className="bg-[#1B3B36]">9:00 AM</option>
+                      <option value="10:00" className="bg-[#1B3B36]">10:00 AM</option>
+                      <option value="11:00" className="bg-[#1B3B36]">11:00 AM</option>
+                      <option value="12:00" className="bg-[#1B3B36]">12:00 PM</option>
+                      <option value="13:00" className="bg-[#1B3B36]">1:00 PM</option>
+                      <option value="14:00" className="bg-[#1B3B36]">2:00 PM</option>
+                      <option value="15:00" className="bg-[#1B3B36]">3:00 PM</option>
+                      <option value="16:00" className="bg-[#1B3B36]">4:00 PM</option>
                     </select>
                   </div>
                 </div>
 
                 <div>
-                  <label className="text-xs font-black text-slate-400 uppercase tracking-widest mb-2 block">Additional Notes</label>
+                  <label className="text-xs font-black text-white/50 uppercase tracking-widest mb-2 block">Additional Notes</label>
                   <textarea
                     value={bookingForm.notes}
                     onChange={(e) => setBookingForm({...bookingForm, notes: e.target.value})}
                     placeholder="Any specific requirements or questions..."
                     rows={3}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-teal-500/50 focus:ring-2 focus:ring-teal-500/20 transition-all resize-none"
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-[#14B8B6]/50 focus:ring-2 focus:ring-[#14B8B6]/20 transition-all resize-none"
                     disabled={bookingLoading}
                     data-testid="booking-notes"
                   />
@@ -822,7 +822,7 @@ export function HomePage() {
                   <button
                     type="button"
                     onClick={() => setShowBookingModal(false)}
-                    className="flex-1 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold py-4 rounded-xl transition-all"
+                    className="flex-1 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold py-4 rounded-full transition-all"
                     disabled={bookingLoading}
                   >
                     Cancel
@@ -830,7 +830,7 @@ export function HomePage() {
                   <button
                     type="submit"
                     disabled={bookingLoading}
-                    className="flex-1 bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-400 hover:to-cyan-400 text-slate-900 font-black uppercase tracking-wider py-4 rounded-xl shadow-lg shadow-teal-500/30 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+                    className="flex-1 bg-gradient-to-r from-[#14B8B6] to-[#0D9488] hover:from-[#0D9488] hover:to-[#14B8B6] text-white font-black uppercase tracking-wider py-4 rounded-full shadow-lg shadow-teal-500/30 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
                     data-testid="booking-submit"
                   >
                     {bookingLoading ? (
