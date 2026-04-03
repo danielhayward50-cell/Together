@@ -1,85 +1,130 @@
 {
-  "theme": "Light",
-  "archetype": "Archetype 4: Swiss & High-Contrast (Adapted for Enterprise Healthcare)",
-  "colors": {
-    "background": "#F4F7FA",
-    "surface": "#FFFFFF",
-    "primary": "#0A1628",
-    "primary_hover": "#1A2B44",
-    "secondary": "#B794F4",
-    "secondary_subtle": "#F3E8FF",
-    "accent": "#14B8B6",
-    "accent_subtle": "#CCFBF1",
-    "alert": "#FF5A5F",
-    "alert_subtle": "#FFE4E6",
-    "text_main": "#0A1628",
-    "text_muted": "#64748B",
-    "border": "#E2E8F0"
+  "project_info": {
+    "name": "ATC Master Platform",
+    "domain": "NDIS Management Enterprise SaaS",
+    "theme": "Light",
+    "archetype": "1 (Organic & Earthy)"
   },
-  "typography": {
-    "heading_font": "Manrope",
-    "body_font": "IBM Plex Sans",
-    "hierarchy": {
-      "h1": "text-3xl tracking-tight font-bold text-[#0A1628]",
-      "h2": "text-xl tracking-tight font-semibold text-[#0A1628]",
-      "h3": "text-lg font-medium text-[#0A1628]",
-      "body": "text-sm leading-relaxed text-[#0A1628]",
-      "overline": "text-xs tracking-[0.15em] uppercase font-semibold text-[#64748B]"
-    }
-  },
-  "layout": {
-    "spacing_system": "Dense but highly structured. Use p-4 to p-6 inside widgets. Grid gaps should be gap-4 or gap-6.",
-    "border_radius": "rounded-md (6px) or rounded-lg (8px). STRICTLY NO 32px radius (kill the bubble look).",
-    "grid_mode": "Control Room Grid (Mode B). grid-cols-1 md:grid-cols-12. KPI cards span 3 cols, main data tables/charts span 9 or 12 cols.",
-    "surfaces": "Grid Borders: Flat solid surfaces, 1px subtle borders (border-[#E2E8F0]), no muddy drop shadows. Use Neumorphism (clay & crisp) ONLY for small toggles."
-  },
-  "components": {
-    "buttons": {
-      "primary": "bg-[#0A1628] text-white rounded-md px-4 py-2 hover:bg-[#1A2B44] hover:-translate-y-px transition-transform shadow-sm font-medium",
-      "secondary": "bg-white text-[#0A1628] border border-[#E2E8F0] rounded-md px-4 py-2 hover:bg-[#F4F7FA] font-medium",
-      "danger": "bg-[#FF5A5F] text-white rounded-md px-4 py-2 hover:bg-red-600 font-medium"
-    },
-    "cards": "Cardless aesthetic or max 8px radius. 1px solid border. White background. No heavy drop shadows.",
-    "navigation": "Dark Navy (#0A1628 to #1A2B44) header/sidebar. Active states use white/10 backgrounds or crisp white text. Inactive text is text-white/60.",
-    "tables": "Dense rows. border-b on rows. Hover bg-[#F4F7FA]. Left aligned data, right aligned metrics/numbers. Table headers use the 'overline' typography rule.",
-    "calendar": "Multi-view layout. Color-coded shift blocks: Teal (#14B8B6) for booked, Alert Orange/Red for vacant shifts. Drag-and-drop ready visual cues.",
-    "alerts": "Vacant Shift alerts use #FF5A5F border-l-4 and subtle red background (#FFE4E6) for high visibility without blinding the user."
-  },
-  "media": {
-    "image_urls": [
-      {
-        "url": "https://images.pexels.com/photos/5722166/pexels-photo-5722166.jpeg",
-        "description": "Professional nurse in blue scrubs",
-        "category": "staff_avatar_1"
-      },
-      {
-        "url": "https://images.pexels.com/photos/4270366/pexels-photo-4270366.jpeg",
-        "description": "Nurse in scrubs and gloves",
-        "category": "staff_avatar_2"
-      },
-      {
-        "url": "https://images.pexels.com/photos/32115898/pexels-photo-32115898.jpeg",
-        "description": "Young female nurse with stethoscope",
-        "category": "staff_avatar_3"
-      }
+  "design_philosophy": {
+    "vibe": "Stunning like a brochure, premium, organized, trustworthy",
+    "principles": [
+      "Generous spacing: Treat data and lists like editorial content, not dense spreadsheets.",
+      "Clear hierarchy: Use typography (Outfit) to create strict structure instead of relying purely on boxes and borders.",
+      "Warmth over clinical: Use earthy greens, sand, and terracotta to make the NDIS platform feel human and caring.",
+      "Intelligent AI UI: AI features should feel magical but grounded, using subtle glows and tracing borders."
     ]
   },
-  "icons": {
-    "library": "@phosphor-icons/react",
-    "instructions": "Use Phosphor Icons (Regular or Duotone weight). Install via: yarn add @phosphor-icons/react. Perfect for dense, technical healthcare dashboards."
+  "typography": {
+    "headings": {
+      "font_family": "Outfit",
+      "weights": ["400", "500", "700"],
+      "usage": "H1-H4, editorial feel, tight tracking. MUST use tracking-tight."
+    },
+    "body": {
+      "font_family": "Manrope",
+      "weights": ["400", "500", "600"],
+      "usage": "Paragraphs, labels, data tables, metrics."
+    },
+    "scales": {
+      "h1": "text-4xl sm:text-5xl font-bold tracking-tight text-primary",
+      "h2": "text-2xl sm:text-3xl font-semibold tracking-tight text-primary",
+      "h3": "text-xl sm:text-2xl font-medium text-primary",
+      "h4": "text-lg sm:text-xl font-medium text-primary",
+      "body": "text-base leading-relaxed text-slate-700",
+      "small": "text-sm text-slate-500",
+      "overline": "text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground"
+    }
   },
-  "motion": {
-    "interactions": "Micro-interactions on hover. Table rows subtly change background. Buttons translate-y-px.",
-    "transitions": "transition-all duration-200 ease-out"
+  "color_palette": {
+    "background": "#FDFCFB",
+    "surface": "#FFFFFF",
+    "primary": {
+      "DEFAULT": "#1B3B36",
+      "hover": "#2A5A53",
+      "foreground": "#FFFFFF"
+    },
+    "secondary": {
+      "DEFAULT": "#E3E8E5",
+      "foreground": "#1B3B36"
+    },
+    "accent": {
+      "DEFAULT": "#C16E5A",
+      "foreground": "#FFFFFF"
+    },
+    "muted": {
+      "DEFAULT": "#F4F5F4",
+      "foreground": "#6B7270"
+    },
+    "border": "#E8EAE9",
+    "ai_highlight": "bg-gradient-to-r from-[#1B3B36] to-[#C16E5A]"
+  },
+  "layout_spacing": {
+    "dashboard_grid": "grid grid-cols-1 md:grid-cols-4 lg:grid-cols-12 gap-6",
+    "bento_marketing": "grid grid-cols-1 md:grid-cols-12 gap-8",
+    "container_padding": "p-6 md:p-8 lg:p-12",
+    "card_radius": "rounded-2xl",
+    "button_radius": "rounded-full"
+  },
+  "surface_strategies": {
+    "cards": "bg-white border border-border shadow-sm hover:shadow-md transition-all duration-300",
+    "headers": "backdrop-blur-xl bg-white/80 border-b border-border z-50",
+    "ai_containers": "relative overflow-hidden bg-white border border-border rounded-xl before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-accent/10 before:to-transparent before:animate-[shimmer_2s_infinite]",
+    "pdf_overlay": "backdrop-blur-2xl bg-black/60 border-white/10"
+  },
+  "components": {
+    "document_hub": {
+      "layout": "Bento grid for top-level folders. List view for files with generous row padding.",
+      "folders": ["Appointments", "Invoices", "Shift Reports", "Contacts", "BSB Reports", "NDIS Forms", "Recent", "Bin"],
+      "style": "Use colored icons and soft background tints for each folder type to make scanning easy. Implement a premium drag-and-drop zone."
+    },
+    "pdf_viewer": {
+      "overlay": "Crystal Glass style (bg-black/60 backdrop-blur-xl) over the main app, with a focused reading view.",
+      "toolbar": "Floating pill-shaped toolbar centered at bottom or top, high contrast (dark mode style)."
+    },
+    "navigation": {
+      "style": "Modern left sidebar on desktop with subtle hover states. Top navbar for global search, AI assistant prompt, and profile."
+    },
+    "kpi_cards": {
+      "style": "Minimalist, no heavy shadows. Large metric numbers in Outfit, subtle trend indicators."
+    }
+  },
+  "animations": {
+    "hover": "transition-all duration-300 ease-out",
+    "entrance": "animate-in fade-in slide-in-from-bottom-4 duration-500",
+    "bento_stagger": "Stagger children animations by 100ms for a premium 'unveiling' effect."
+  },
+  "image_urls": {
+    "hero_login_background": {
+      "url": "https://images.pexels.com/photos/7108324/pexels-photo-7108324.jpeg",
+      "description": "Modern, premium clinic interior in teal/white to use as login or hero background overlay."
+    },
+    "ai_feature_bg": {
+      "url": "https://images.unsplash.com/photo-1763734313272-f06e0d4c1239",
+      "description": "Abstract sage green organic shapes for AI generated sections or onboarding."
+    },
+    "staff_profile_group": {
+      "url": "https://images.pexels.com/photos/5452254/pexels-photo-5452254.jpeg",
+      "description": "Diverse healthcare professionals, usable for Staff/Client CRM UI headers."
+    },
+    "document_thumbnail": {
+      "url": "https://images.unsplash.com/photo-1636213128612-39d1341adb23",
+      "description": "Close up of text for PDF previews/Document Hub thumbnails."
+    },
+    "medical_abstract": {
+      "url": "https://images.pexels.com/photos/5619462/pexels-photo-5619462.jpeg",
+      "description": "Professional medical setup for empty states or dashboard banners."
+    }
+  },
+  "testing": {
+    "requirements": "All interactive and key informational elements MUST include a data-testid attribute. Example: data-testid='upload-ndis-form-btn'."
   },
   "instructions_to_main_agent": [
-    "1. Ditch the 32px ultra-rounded cards immediately. Use max 8px border-radius to establish an enterprise, authoritative feel.",
-    "2. Implement the 'Control Room' grid layout. Maximize horizontal space. Use strict optical alignment.",
-    "3. Use Dark Navy (#0A1628) for the main structural elements (Sidebar/Header) and Primary CTAs.",
-    "4. Use Teal (#14B8B6) and Lavender (#B794F4) STRICTLY as data-accents (e.g., chart lines, tags, calendar blocks, status indicators), NOT for large buttons or backgrounds.",
-    "5. Ensure all interactive elements have data-testid attributes (e.g., data-testid='add-carer-button').",
-    "6. Use Manrope for headings and IBM Plex Sans for tables/body data to give it an enterprise yet human feel.",
-    "7. Forms must have clear label-input patterns with labels adopting the 'overline' text styling for crisp readability.",
-    "8. Implement a 'Grid Borders' approach for the main dashboard layout to expose the skeleton and look ultra-technical and organized."
+    "Inject the color_palette colors into tailwind.config.js under theme.extend.colors.",
+    "Import 'Outfit' and 'Manrope' from Google Fonts in index.css.",
+    "Use Lucide React icons.",
+    "Ensure the Document Hub is structured with dedicated UI components for the required folders (Appointments, Invoices, Shift Reports, Contacts, BSB Reports, NDIS Forms).",
+    "For the PDF Viewer, build a 'Crystal Glass' modal using Shadcn Dialog or a custom fixed overlay with high z-index and backdrop-blur-xl.",
+    "AI Integration: Create an aesthetic 'Smart Outreach CRM' or 'AI Assistant' block using the accent color (#C16E5A) and shimmer animations to denote intelligence.",
+    "Keep borders very light (border-border) and radius generous (rounded-2xl) to mimic a premium brochure look rather than a rigid data-table."
   ]
 }
