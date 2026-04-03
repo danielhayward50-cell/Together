@@ -125,7 +125,7 @@ Build an enterprise-grade management platform for Achieve Together Care (NDIS pr
 **1. WordPress Owner Login Integration**
 - ✅ Header template edited (post ID: 11)
 - ✅ Owner Login button now links to Emergent app
-- ✅ Link: `https://client-dashboard-135.preview.emergentagent.com/login`
+- ✅ Link: `https://achieve-care-portal.preview.emergentagent.com/login`
 - ✅ Verified: Clicking "Owner Login" on WordPress redirects to ATC Platform
 
 **2. Inquiries & Bookings Management (`/app/frontend/src/components/inquiries/InquiriesBookingsManagement.jsx`)**
