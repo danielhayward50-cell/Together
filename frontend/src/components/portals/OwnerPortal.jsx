@@ -4,7 +4,7 @@ import {
   LayoutDashboard, Users, FileText, DollarSign, Calendar,
   Settings, HelpCircle, LogOut, Menu, X, Bell, Search,
   TrendingUp, AlertCircle, CheckCircle, Clock, Rocket,
-  ChevronRight, Filter, Plus, Mail, MessageSquare, Globe, HardDrive, Inbox, FileSignature
+  ChevronRight, Filter, Plus, Mail, MessageSquare, Globe, HardDrive, Inbox, FileSignature, FolderOpen
 } from 'lucide-react';
 import { STAFF, CLIENTS, INVOICES, REPORTS, dashboardStats } from '../../lib/data';
 import { getComplianceScore, getExpiredDocuments, getExpiringDocuments } from '../../lib/compliance';
@@ -22,6 +22,7 @@ import WebsiteIntegration from '../website/WebsiteIntegration';
 import GDriveSyncComponent from '../gdrive/GDriveSyncComponent';
 import InquiriesBookingsManagement from '../inquiries/InquiriesBookingsManagement';
 import NDISFormFiller from '../forms/NDISFormFiller';
+import DocumentHub from '../documents/DocumentHub';
 import { useAuth } from '../../context/AuthContext';
 import { dashboardAPI, staffAPI, clientsAPI, invoicesAPI, reportsAPI } from '../../services/api';
 
@@ -94,6 +95,7 @@ export function OwnerPortal() {
 
   const navItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
+    { id: 'documents', label: 'Document Hub', icon: FolderOpen },
     { id: 'inquiries', label: 'Inquiries', icon: Inbox },
     { id: 'crm', label: 'Smart Outreach', icon: Rocket },
     { id: 'calendar', label: 'Calendar', icon: Calendar },
@@ -394,6 +396,8 @@ export function OwnerPortal() {
         return <WebsiteIntegration />;
       case 'gdrive':
         return <GDriveSyncComponent />;
+      case 'documents':
+        return <DocumentHub />;
       case 'inquiries':
         return <InquiriesBookingsManagement />;
       case 'forms':
@@ -406,12 +410,12 @@ export function OwnerPortal() {
   };
 
   return (
-    <div className="flex h-screen bg-[#F4F7FA] overflow-hidden">
-      {/* Sidebar - Dark Navy */}
+    <div className="flex h-screen bg-[#FDFCFB] overflow-hidden">
+      {/* Sidebar - Premium Deep Green */}
       <aside
         className={`${
           isMobile ? 'fixed inset-y-0 left-0 z-50' : 'relative'
-        } ${sidebarOpen ? 'w-64' : 'w-0'} transition-all duration-300 ease-out bg-[#0A1628]`}
+        } ${sidebarOpen ? 'w-64' : 'w-0'} transition-all duration-300 ease-out bg-[#1B3B36]`}
         data-testid="sidebar"
       >
         {sidebarOpen && (
@@ -419,7 +423,7 @@ export function OwnerPortal() {
             {/* Logo */}
             <div className="p-5 border-b border-white/10 flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-[#14B8B6] rounded-lg flex items-center justify-center text-[#0A1628] font-bold text-sm shadow-lg">
+                <div className="w-11 h-11 bg-[#14B8B6] rounded-2xl flex items-center justify-center text-[#1B3B36] font-bold text-sm shadow-lg">
                   ATC
                 </div>
                 <div>
@@ -451,15 +455,15 @@ export function OwnerPortal() {
                       if (isMobile) setSidebarOpen(false);
                     }}
                     data-testid={`nav-${item.id}`}
-                    className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
+                    className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
                       isActive
-                        ? 'bg-white/10 text-white'
+                        ? 'bg-white/15 text-white shadow-sm'
                         : 'text-white/60 hover:bg-white/5 hover:text-white/90'
                     }`}
                   >
                     <Icon size={18} />
                     <span>{item.label}</span>
-                    {isActive && <div className="ml-auto w-1.5 h-1.5 bg-[#14B8B6] rounded-full"></div>}
+                    {isActive && <div className="ml-auto w-2 h-2 bg-[#14B8B6] rounded-full"></div>}
                   </button>
                 );
               })}
@@ -468,7 +472,7 @@ export function OwnerPortal() {
             {/* User Profile */}
             <div className="p-4 border-t border-white/10 bg-black/20">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-9 h-9 rounded-lg bg-[#14B8B6] flex items-center justify-center text-[#0A1628] font-bold text-xs overflow-hidden">
+                <div className="w-10 h-10 rounded-xl bg-[#C16E5A] flex items-center justify-center text-white font-bold text-xs overflow-hidden">
                   {user?.picture ? (
                     <img src={user.picture} alt={user.name} className="w-full h-full object-cover" />
                   ) : (
@@ -476,13 +480,13 @@ export function OwnerPortal() {
                   )}
                 </div>
                 <div className="truncate text-white">
-                  <p className="text-sm font-medium truncate">{user?.name || 'User'}</p>
+                  <p className="text-sm font-semibold truncate">{user?.name || 'User'}</p>
                   <p className="text-[#14B8B6] text-[10px] font-semibold uppercase">{user?.role || 'Staff'}</p>
                 </div>
               </div>
               <button
                 onClick={handleLogout}
-                className="w-full py-2 rounded-lg bg-red-500/10 text-red-400 text-xs font-semibold tracking-wide hover:bg-red-500 hover:text-white transition-all"
+                className="w-full py-2.5 rounded-xl bg-white/10 text-white/80 text-xs font-semibold tracking-wide hover:bg-red-500 hover:text-white transition-all"
                 data-testid="logout-btn"
               >
                 LOGOUT
@@ -494,55 +498,55 @@ export function OwnerPortal() {
 
       {/* Main Content */}
       <main className="flex-1 flex flex-col min-w-0 overflow-hidden">
-        {/* Header Bar - Dense Professional */}
-        <header className="h-14 bg-white border-b border-slate-200 flex items-center justify-between px-4 flex-shrink-0 z-40" data-testid="header">
-          <div className="flex items-center gap-3">
+        {/* Header Bar - Premium Style */}
+        <header className="h-16 bg-white/80 backdrop-blur-xl border-b border-[#E8EAE9] flex items-center justify-between px-6 flex-shrink-0 z-40" data-testid="header">
+          <div className="flex items-center gap-4">
             {(!sidebarOpen || isMobile) && (
               <button
                 onClick={() => setSidebarOpen(true)}
-                className="p-1.5 hover:bg-slate-100 rounded-lg transition-colors"
+                className="p-2 hover:bg-[#F4F5F4] rounded-xl transition-colors"
                 data-testid="menu-toggle"
               >
-                <Menu size={20} className="text-slate-600" />
+                <Menu size={20} className="text-[#1B3B36]" />
               </button>
             )}
             <div>
-              <h2 className="font-heading text-lg font-bold text-slate-900">
+              <h2 className="font-heading text-xl font-bold text-[#1B3B36]">
                 {navItems.find(item => item.id === activeSection)?.label || 'Dashboard'}
               </h2>
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             {/* Search */}
             <div className="relative hidden md:block">
-              <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+              <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-[#6B7270]" />
               <input
                 type="text"
                 placeholder="Search..."
-                className="pl-9 pr-4 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 w-48"
+                className="pl-10 pr-4 py-2 bg-[#F4F5F4] border border-[#E8EAE9] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1B3B36]/20 focus:border-[#1B3B36] w-56 transition-all"
                 data-testid="header-search"
               />
             </div>
             
             {/* Status Indicator */}
-            <div className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 rounded-lg">
+            <div className="flex items-center gap-2 px-4 py-2 bg-emerald-50 rounded-full">
               <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
               <span className="text-xs font-semibold text-emerald-700 hidden sm:inline">Online</span>
             </div>
             
             {/* Notifications */}
-            <button className="p-2 hover:bg-slate-100 rounded-lg transition-colors relative" data-testid="notifications-btn">
-              <Bell size={18} className="text-slate-600" />
+            <button className="p-2.5 hover:bg-[#F4F5F4] rounded-xl transition-colors relative" data-testid="notifications-btn">
+              <Bell size={18} className="text-[#1B3B36]" />
               {(expiredDocs.length + expiringDocs.length) > 0 && (
-                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                <span className="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-[#C16E5A] rounded-full border-2 border-white"></span>
               )}
             </button>
           </div>
         </header>
 
         {/* Content Area */}
-        <div className="flex-1 overflow-y-auto p-4 lg:p-6">
+        <div className="flex-1 overflow-y-auto p-6 lg:p-8">
           {renderContent()}
         </div>
       </main>
@@ -558,48 +562,48 @@ export function OwnerPortal() {
   );
 }
 
-// KPI Card Component - Enterprise Style
+// KPI Card Component - Premium Brochure Style
 function KPICard({ title, subtitle, value, change, changeType, icon: Icon, accentColor, ...props }) {
   return (
     <div className="atc-card flex items-start gap-4" {...props}>
-      <div className={`w-10 h-10 ${accentColor} rounded-lg flex items-center justify-center text-white shadow-sm flex-shrink-0`}>
-        <Icon size={20} />
+      <div className={`w-12 h-12 ${accentColor} rounded-2xl flex items-center justify-center text-white shadow-lg flex-shrink-0`}>
+        <Icon size={22} />
       </div>
       <div className="flex-1 min-w-0">
-        <p className="text-xs tracking-widest uppercase font-semibold text-slate-500">{title}</p>
-        <p className="text-2xl font-heading font-bold text-slate-900 mt-0.5">{value}</p>
+        <p className="text-xs tracking-[0.15em] uppercase font-bold text-[#6B7270]">{title}</p>
+        <p className="text-2xl font-heading font-bold text-[#1B3B36] mt-1">{value}</p>
         <div className="flex items-center gap-2 mt-1">
           {change && (
             <span className={`text-xs font-semibold ${
               changeType === 'positive' ? 'text-emerald-600' : 
-              changeType === 'warning' ? 'text-amber-600' : 'text-slate-500'
+              changeType === 'warning' ? 'text-amber-600' : 'text-[#6B7270]'
             }`}>
               {change}
             </span>
           )}
-          {subtitle && <span className="text-xs text-slate-400">{subtitle}</span>}
+          {subtitle && <span className="text-xs text-[#6B7270]">{subtitle}</span>}
         </div>
       </div>
     </div>
   );
 }
 
-// Quick Action Button Component
+// Quick Action Button Component - Premium Style
 function QuickActionBtn({ label, description, onClick, icon: Icon, color, ...props }) {
   return (
     <button
       onClick={onClick}
-      className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-slate-50 transition-all text-left group"
+      className="w-full flex items-center gap-4 p-4 rounded-2xl hover:bg-[#F4F5F4] transition-all text-left group"
       {...props}
     >
-      <div className={`w-10 h-10 ${color} rounded-lg flex items-center justify-center text-white shadow-sm group-hover:-translate-y-0.5 transition-transform`}>
-        <Icon size={18} />
+      <div className={`w-12 h-12 ${color} rounded-2xl flex items-center justify-center text-white shadow-lg group-hover:-translate-y-1 transition-transform`}>
+        <Icon size={20} />
       </div>
       <div className="flex-1">
-        <p className="font-medium text-slate-900">{label}</p>
-        <p className="text-xs text-slate-500">{description}</p>
+        <p className="font-semibold text-[#1B3B36]">{label}</p>
+        <p className="text-xs text-[#6B7270]">{description}</p>
       </div>
-      <ChevronRight size={16} className="text-slate-300 group-hover:text-slate-500 transition-colors" />
+      <ChevronRight size={18} className="text-[#E8EAE9] group-hover:text-[#1B3B36] transition-colors" />
     </button>
   );
 }
